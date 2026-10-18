@@ -13,6 +13,7 @@
   "entry_type_and_date",
   "company",
   "voucher_type",
+  "branch",
   "column_break1",
   "naming_series",
   "posting_date",
@@ -524,7 +525,6 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:['Credit Note', 'Debit Note'].includes(doc.voucher_type)",
    "fieldname": "apply_tds",
    "fieldtype": "Check",
    "label": "Consider for Tax Withholding "
@@ -665,6 +665,12 @@
    "fieldname": "custom_remark",
    "fieldtype": "Check",
    "label": "Custom Remark"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "icon": "notebook-pen",
@@ -679,7 +685,7 @@
    "table_fieldname": "payment_entries"
   }
  ],
- "modified": "2026-09-30 23:24:44.044604",
+ "modified": "2026-10-16 20:33:02.005991",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry",

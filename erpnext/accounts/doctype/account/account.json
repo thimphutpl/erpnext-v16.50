@@ -20,6 +20,7 @@
   "root_type",
   "report_type",
   "account_currency",
+  "budget_type",
   "column_break1",
   "parent_account",
   "account_category",
@@ -203,13 +204,19 @@
    "fieldtype": "Link",
    "label": "Account Category",
    "options": "Account Category"
+  },
+  {
+   "fieldname": "budget_type",
+   "fieldtype": "Link",
+   "label": "Budget Type",
+   "options": "Budget Type"
   }
  ],
  "icon": "vault",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-09-25 15:33:56.058228",
+ "modified": "2026-10-17 13:48:07.453601",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",

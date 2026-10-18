@@ -10,6 +10,7 @@
   "party_type",
   "party",
   "tax_id",
+  "cost_center",
   "column_break_egzm",
   "tax_withholding_category",
   "tax_withholding_group",
@@ -218,13 +219,20 @@
    "hidden": 1,
    "label": "Created By Migration",
    "read_only": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-22 09:07:26.701207",
+ "modified": "2026-10-16 22:43:30.382574",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Tax Withholding Entry",

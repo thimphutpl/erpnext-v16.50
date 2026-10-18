@@ -18,6 +18,7 @@ class CostCenter(NestedSet):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		branch_created: DF.Check
 		company: DF.Link
 		cost_center_name: DF.Data
 		cost_center_number: DF.Data | None

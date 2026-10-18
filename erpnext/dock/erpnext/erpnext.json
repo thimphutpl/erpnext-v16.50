@@ -6,7 +6,7 @@
  "idx": 0,
  "items": [
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "sliders-duotone",
    "link_to": "Setup",
@@ -14,7 +14,7 @@
    "title": "Setup"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "calculator-duotone",
    "link_to": "Accounts",
@@ -22,7 +22,7 @@
    "title": "Accounts"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "storefront-duotone",
    "link_to": "Selling",
@@ -30,7 +30,7 @@
    "title": "Selling"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "shopping-cart-duotone",
    "link_to": "Buying",
@@ -38,7 +38,7 @@
    "title": "Buying"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "shelf-rack-duotone",
    "link_to": "Stock",
@@ -46,7 +46,7 @@
    "title": "Stock"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "factory-duotone",
    "link_to": "Manufacturing",
@@ -54,7 +54,7 @@
    "title": "Manufacturing"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "gantt-chart-duotone",
    "link_to": "Projects",
@@ -62,7 +62,7 @@
    "title": "Projects"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "asset-hand-duotone",
    "link_to": "Assets",
@@ -70,7 +70,7 @@
    "title": "Assets"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "quality-seal-duotone",
    "link_to": "Quality",
@@ -78,7 +78,15 @@
    "title": "Quality"
   },
   {
-   "added": 0,
+   "added": 1,
+   "hidden": 0,
+   "icon": "color-monthly-rank",
+   "link_to": "Budget Management",
+   "link_type": "Workspace",
+   "title": "Budget"
+  },
+  {
+   "added": 1,
    "hidden": 1,
    "icon": "handshake",
    "link_to": "CRM",
@@ -86,23 +94,15 @@
    "title": "CRM"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 1,
    "icon": "headset",
    "link_to": "Support",
    "link_type": "Sidebar",
    "title": "Support"
-  },
-  {
-   "added": 0,
-   "hidden": 0,
-   "icon": "panels-top-left",
-   "link_to": "Portal",
-   "link_type": "Sidebar",
-   "title": "Portal"
   }
  ],
- "modified": "2026-10-04 13:00:00.000000",
+ "modified": "2026-10-17 13:49:01.983406",
  "modified_by": "Administrator",
  "name": "erpnext",
  "owner": "Administrator",
