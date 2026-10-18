@@ -6,7 +6,7 @@ import json
 
 import frappe
 from frappe.utils.nestedset import NestedSet, get_root_of
-
+from frappe.utils import cint
 from erpnext.utilities.transaction_base import delete_events
 
 
@@ -19,10 +19,21 @@ class Department(NestedSet):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		approver: DF.Link | None
+		approver_designation: DF.Link | None
+		approver_name: DF.Data | None
+		approver: DF.Link | None
+		approver_designation: DF.Link | None
+		approver_name: DF.Data | None
 		company: DF.Link
 		department_name: DF.Data
 		disabled: DF.Check
+		is_department: DF.Check
+		is_division: DF.Check
 		is_group: DF.Check
+		is_section: DF.Check
+		is_unit: DF.Check
+		leave_block_list: DF.Link | None
 		lft: DF.Int
 		old_parent: DF.Data | None
 		parent_department: DF.Link | None
@@ -84,14 +95,10 @@ def get_children(doctype, parent=None, company=None, is_root=False, include_disa
 	else:
 		filters["parent_department"] = parent
 
-	# `doctype` is caller-supplied and only reaches has_column; the query below is fixed to Department,
-	# so pin it rather than letting a caller probe another table's columns.
-	if frappe.db.has_column("Department", "disabled") and not include_disabled:
+	if frappe.db.has_column(doctype, "disabled") and not include_disabled:
 		filters["disabled"] = False
 
-	# get_list, not get_all: it applies the caller's User Permissions. Department carries no `if_owner`
-	# row, so this does not silently empty the tree.
-	return frappe.get_list("Department", fields=fields, filters=filters, order_by="name")
+	return frappe.get_all("Department", fields=fields, filters=filters, order_by="name")
 
 
 @frappe.whitelist()
@@ -101,11 +108,28 @@ def add_node():
 	args = frappe.form_dict
 	args = make_tree_args(**args)
 
-	# `args` comes straight from form_dict, so without this the caller chooses the doctype created.
-	# insert() would still check permissions on whatever they named.
-	args.doctype = "Department"
-
 	if args.parent_department == args.company:
 		args.parent_department = None
 
 	frappe.get_doc(args).insert()
+
+@frappe.whitelist()
+def get_employee_count(department):
+	dep = frappe.get_doc("Department", department)	
+	cond = ''
+	if cint(dep.is_department):	
+		cond = ' and department ="{}"'.format(dep.name)
+	if cint(dep.is_division):	
+		cond = ' and division ="{}"'.format(dep.department_name)
+	if cint(dep.is_unit): 
+		cond = ' and unit ="{}"'.format(dep.department_name)
+	if cint(dep.is_section): 
+		cond = ' and section ="{}"'.format(dep.department_name)
+	data = {}
+	res = frappe.db.sql("""select count(*) employee_count from `tabEmployee`
+					where status = "Active" {} """.format(cond))
+	data['count'] = res[0][0] if res[0][0] else 0
+	data['approver_name'] = dep.approver_name
+	data['approver_designation'] = dep.approver_designation
+	# frappe.throw(str(data))
+	return data
