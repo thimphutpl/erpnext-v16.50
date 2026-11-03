@@ -31,16 +31,11 @@ class Supplier(TransactionBase):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
-		from erpnext.accounts.doctype.allowed_to_transact_with.allowed_to_transact_with import (
-			AllowedToTransactWith,
-		)
+		from erpnext.accounts.doctype.allowed_to_transact_with.allowed_to_transact_with import AllowedToTransactWith
 		from erpnext.accounts.doctype.party_account.party_account import PartyAccount
-		from erpnext.buying.doctype.customer_number_at_supplier.customer_number_at_supplier import (
-			CustomerNumberAtSupplier,
-		)
+		from erpnext.buying.doctype.customer_number_at_supplier.customer_number_at_supplier import CustomerNumberAtSupplier
 		from erpnext.utilities.doctype.portal_user.portal_user import PortalUser
+		from frappe.types import DF
 
 		accounts: DF.Table[PartyAccount]
 		alias: DF.Data | None
@@ -76,6 +71,7 @@ class Supplier(TransactionBase):
 		supplier_name: DF.Data
 		supplier_primary_address: DF.Link | None
 		supplier_primary_contact: DF.Link | None
+		supplier_tpn_no: DF.Data | None
 		supplier_type: DF.Literal["Company", "Individual", "Partnership"]
 		tax_category: DF.Link | None
 		tax_id: DF.Data | None

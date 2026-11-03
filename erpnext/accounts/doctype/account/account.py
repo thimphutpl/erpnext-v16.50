@@ -41,7 +41,9 @@ class Account(NestedSet):
 		company: DF.Link
 		disabled: DF.Check
 		freeze_account: DF.Literal["No", "Yes"]
+		ignore_budget_check: DF.Check
 		include_in_gross: DF.Check
+		is_centralized_budget: DF.Check
 		is_group: DF.Check
 		lft: DF.Int
 		old_parent: DF.Data | None

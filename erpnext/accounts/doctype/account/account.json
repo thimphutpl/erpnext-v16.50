@@ -20,7 +20,6 @@
   "root_type",
   "report_type",
   "account_currency",
-  "budget_type",
   "column_break1",
   "parent_account",
   "account_category",
@@ -31,7 +30,11 @@
   "lft",
   "rgt",
   "old_parent",
-  "include_in_gross"
+  "include_in_gross",
+  "budget_detail_tab",
+  "budget_type",
+  "ignore_budget_check",
+  "is_centralized_budget"
  ],
  "fields": [
   {
@@ -210,13 +213,30 @@
    "fieldtype": "Link",
    "label": "Budget Type",
    "options": "Budget Type"
+  },
+  {
+   "fieldname": "budget_detail_tab",
+   "fieldtype": "Tab Break",
+   "label": "Budget Detail"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_budget_check",
+   "fieldtype": "Check",
+   "label": "Ignore Budget Check"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_centralized_budget",
+   "fieldtype": "Check",
+   "label": "Is Centralized Budget"
   }
  ],
  "icon": "vault",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-17 13:48:07.453601",
+ "modified": "2026-10-18 19:33:22.144837",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",
