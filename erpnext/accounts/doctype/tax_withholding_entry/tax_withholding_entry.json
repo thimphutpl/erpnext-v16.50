@@ -7,6 +7,7 @@
  "field_order": [
   "section_break_krko",
   "company",
+  "tax_account",
   "party_type",
   "party",
   "tax_id",
@@ -226,13 +227,20 @@
    "label": "Cost Center",
    "options": "Cost Center",
    "read_only": 1
+  },
+  {
+   "fieldname": "tax_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tax Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-10-16 22:43:30.382574",
+ "modified": "2026-11-10 16:23:51.639588",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Tax Withholding Entry",

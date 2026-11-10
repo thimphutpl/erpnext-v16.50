@@ -27,6 +27,7 @@ class TaxWithholdingEntry(Document):
 
 		company: DF.Link | None
 		conversion_rate: DF.Float
+		cost_center: DF.Link | None
 		created_by_migration: DF.Check
 		currency: DF.Link | None
 		lower_deduction_certificate: DF.Link | None
@@ -36,6 +37,7 @@ class TaxWithholdingEntry(Document):
 		party: DF.DynamicLink | None
 		party_type: DF.Link | None
 		status: DF.Literal["", "Settled", "Under Withheld", "Over Withheld", "Duplicate", "Cancelled"]
+		tax_account: DF.Link | None
 		tax_id: DF.Data | None
 		tax_rate: DF.Percent
 		tax_withholding_category: DF.Link | None
@@ -1006,9 +1008,11 @@ class TaxWithholdingController:
 
 			if amount_to_process * value_direction <= 0:
 				break
-
+            
 			# Create base entry and calculate withholding amount
 			merged_entry = self._create_base_entry(entry, category, tax_rate, default_obj)
+			frappe.throw(str(merged_entry))
+			
 			merged_entry.update(
 				{
 					"taxable_amount": flt(amount_to_process, self.precision),
