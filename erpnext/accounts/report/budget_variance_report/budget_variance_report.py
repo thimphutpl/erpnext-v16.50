@@ -45,25 +45,39 @@ def get_budget_records(filters, dimensions):
 	budget_against_field = frappe.scrub(filters["budget_against"])
 	budget = frappe.qb.DocType("Budget")
 
+	bud_acc = frappe.qb.DocType("Budget Account")
+
+	# query = (
+	#     qb.from_(bud)
+	#     .inner_join(bud_acc)
+	#     .on(
+	#         (bud_acc.parent == bud.name)
+	#         & (bud_acc.parenttype == "Budget")
+	#         & (bud_acc.parentfield == "accounts")
+	#     )
+
+
 	return (
 		frappe.qb.from_(budget)
+		.inner_join(bud_acc)
+		.on(
+			(bud_acc.parent == budget.name)
+		)
+
 		.select(
 			budget.name,
-			budget.account,
+			bud_acc.account,
 			budget[budget_against_field].as_("dimension"),
-			budget.budget_amount,
-			budget.from_fiscal_year,
-			budget.to_fiscal_year,
-			budget.budget_start_date,
-			budget.budget_end_date,
+			bud_acc.budget_amount,
+			budget.fiscal_year
 		)
 		.where(
 			(budget.company == filters.company)
 			& (budget.docstatus == 1)
 			& (budget.budget_against == filters.budget_against)
 			& (budget[budget_against_field].isin(dimensions))
-			& (budget.from_fiscal_year <= filters.to_fiscal_year)
-			& (budget.to_fiscal_year >= filters.from_fiscal_year)
+			& (budget.fiscal_year <= filters.to_fiscal_year)
+			& (budget.fiscal_year >= filters.from_fiscal_year)
 		)
 	).run(as_dict=True)
 
@@ -123,10 +137,15 @@ def get_actual_transactions(dimension_name, filters):
 
 	gle = frappe.qb.DocType("GL Entry")
 	budget = frappe.qb.DocType("Budget")
+	bud_acc = frappe.qb.DocType("Budget Account")
 
 	query = (
 		frappe.qb.from_(gle)
 		.from_(budget)
+		.inner_join(bud_acc)
+		.on(
+			(bud_acc.parent == budget.name)
+		)
 		.select(
 			gle.account,
 			gle.debit,
@@ -137,7 +156,7 @@ def get_actual_transactions(dimension_name, filters):
 		)
 		.where(
 			(budget.docstatus == 1)
-			& (budget.account == gle.account)
+			& (bud_acc.account == gle.account)
 			& (gle.fiscal_year >= filters.from_fiscal_year)
 			& (gle.fiscal_year <= filters.to_fiscal_year)
 			& (gle.is_cancelled == 0)

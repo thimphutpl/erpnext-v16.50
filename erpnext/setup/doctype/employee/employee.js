@@ -22,6 +22,113 @@ erpnext.setup.EmployeeController = class EmployeeController extends frappe.ui.fo
 
 frappe.ui.form.on("Employee", {
 	
+	refresh(frm) {
+		frappe.after_ajax(() => {
+			const $connections = $(
+				".form-dashboard-section.form-links"
+			).first();
+
+			const $activity = $(".section-head")
+				.filter(function () {
+					return $(this).text().trim() === "Activity";
+				})
+				.first();
+
+			if (!$connections.length || !$activity.length) return;
+
+			// Remove previous custom Connections heading
+			$("#employee-connections-heading").remove();
+
+			// Add CSS once to keep connections collapsed
+			// even if the dashboard content is redrawn.
+			if (!$("#employee-connections-style").length) {
+				$("head").append(`
+					<style id="employee-connections-style">
+						.form-links.employee-connections-collapsed
+						> :not(#employee-connections-heading) {
+							display: none !important;
+						}
+
+						#employee-connections-heading {
+							cursor: pointer;
+						}
+					</style>
+				`);
+			}
+
+			// Clone native Activity heading
+			const $heading = $activity.clone(false, false);
+
+			$heading
+				.attr("id", "employee-connections-heading")
+				.addClass("collapsed")
+				.attr("tabindex", "0")
+				.attr("role", "button")
+				.attr("aria-expanded", "false");
+
+			// Replace heading text
+			$heading.contents()
+				.filter(function () {
+					return this.nodeType === 3 &&
+						this.textContent.trim();
+				})
+				.first()
+				.replaceWith("Connections ");
+
+			// Put heading inside the Connections section
+			$connections.prepend($heading);
+
+			// Match the horizontal position of Activity
+			const activityLeft =
+				$activity[0].getBoundingClientRect().left;
+
+			const headingLeft =
+				$heading[0].getBoundingClientRect().left;
+
+			$heading.css(
+				"margin-left",
+				`${activityLeft - headingLeft}px`
+			);
+
+			// Collapse by default
+			$connections.addClass(
+				"employee-connections-collapsed"
+			);
+
+			function toggleConnections() {
+				const expanding = $connections.hasClass(
+					"employee-connections-collapsed"
+				);
+
+				$connections.toggleClass(
+					"employee-connections-collapsed",
+					!expanding
+				);
+
+				$heading.toggleClass("collapsed", !expanding);
+
+				$heading.attr("aria-expanded", String(expanding));
+
+				// Match native Activity arrow direction
+				$heading.find("use").attr(
+					"href",
+					expanding
+						? "#icon-chevron-down"
+						: "#icon-chevron-right"
+				);
+			}
+
+			$heading.on("click", toggleConnections);
+
+			$heading.on("keydown", function (e) {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					toggleConnections();
+				}
+			});
+		});
+	},
+
 	onload: function (frm) {
 		frm.set_query("department", function () {
 			return {
@@ -98,6 +205,39 @@ frappe.ui.form.on("Employee", {
 			},
 		});
 	},
+	nominee_cid_attachment: async function(frm) {
+        const file_url = frm.doc.nominee_cid_attachment;
+
+        if (!file_url) return;
+
+        const files = await frappe.db.get_list("File", {
+            filters: {
+                file_url: file_url
+            },
+            fields: ["file_name", "file_size"],
+            limit: 1
+        });
+
+        if (!files.length) {
+            frappe.msgprint(
+                __("Unable to verify CID attachment size.")
+            );
+            return;
+        }
+
+        const max_size = 200 * 1024; // 200 KB
+
+        if (files[0].file_size > max_size) {
+            await frm.set_value(
+                "nominee_cid_attachment",
+                ""
+            );
+
+            frappe.throw(
+                __("CID attachment must not exceed 200 KB.")
+            );
+        }
+    }
 });
 
 cur_frm.cscript = new erpnext.setup.EmployeeController({

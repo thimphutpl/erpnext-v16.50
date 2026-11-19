@@ -34,6 +34,7 @@
   "company_details_section",
   "employee_number",
   "employment_type",
+  "pms_group",
   "column_break_25",
   "designation",
   "employment_status",
@@ -138,6 +139,7 @@
   "employee_family_details",
   "employee_benefits_nominees_section",
   "nominees",
+  "import_file",
   "profile_tab",
   "bio",
   "educational_qualification",
@@ -642,6 +644,7 @@
    "label": "Employee Benefits Nominees"
   },
   {
+   "allow_bulk_edit": 1,
    "fieldname": "nominees",
    "fieldtype": "Table",
    "label": "Retirement Benefits Nominees Name",
@@ -1144,6 +1147,18 @@
    "fieldtype": "Link",
    "label": "Attendance Branch",
    "options": "Branch"
+  },
+  {
+   "description": "Upload CID supporting documents for the nominees (PDF, JPG or PNG).",
+   "fieldname": "import_file",
+   "fieldtype": "Attach",
+   "label": "Import File "
+  },
+  {
+   "fieldname": "pms_group",
+   "fieldtype": "Link",
+   "label": "PMS Group",
+   "options": "PMS Group"
   }
  ],
  "icon": "fa fa-user",
@@ -1151,7 +1166,7 @@
  "image_field": "image",
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-16 17:07:19.268415",
+ "modified": "2026-11-12 16:00:31.831982",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Employee",

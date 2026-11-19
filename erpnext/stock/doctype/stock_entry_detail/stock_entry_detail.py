@@ -58,6 +58,7 @@ class StockEntryDetail(Document):
 		sample_quantity: DF.Int
 		scio_detail: DF.Data | None
 		sco_rm_detail: DF.Data | None
+		secondary_item_type: DF.Literal["", "Co-Product", "By-Product", "Scrap", "Additional Finished Good"]
 		serial_and_batch_bundle: DF.Link | None
 		serial_no: DF.Text | None
 		set_basic_rate_manually: DF.Check
@@ -67,11 +68,10 @@ class StockEntryDetail(Document):
 		t_warehouse: DF.Link | None
 		transfer_qty: DF.Float
 		transferred_qty: DF.Float
-		secondary_item_type: DF.Literal["", "Co-Product", "By-Product", "Scrap", "Additional Finished Good"]
 		uom: DF.Link
-		valuation_type: DF.Literal["", "Valuation Rate", "% of Component Cost", "Manual"]
 		use_serial_batch_fields: DF.Check
 		valuation_rate: DF.Currency
+		valuation_type: DF.Literal["", "Valuation Rate", "% of Component Cost", "Manual"]
 	# end: auto-generated types
 
 	pass

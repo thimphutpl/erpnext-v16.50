@@ -76,6 +76,7 @@
   "default_deferred_revenue_account",
   "column_break_dcdl",
   "default_deferred_expense_account",
+  "employer_contribution_pf_account",
   "advance_payments_section",
   "book_advance_payments_in_separate_party_account",
   "reconcile_on_advance_payment_date",
@@ -1050,6 +1051,12 @@
    "fieldtype": "Link",
    "label": "Registration Expense Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "employer_contribution_pf_account",
+   "fieldtype": "Link",
+   "label": "Employer Contribution PF Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
@@ -1058,7 +1065,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-07 07:45:45.182112",
+ "modified": "2026-11-16 23:17:26.038714",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",

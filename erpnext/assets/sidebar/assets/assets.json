@@ -1,6 +1,6 @@
 {
  "app": "erpnext",
- "creation": "2026-08-16 00:00:00.000000",
+ "creation": "2026-08-16 00:00:00",
  "docstatus": 0,
  "doctype": "Sidebar",
  "header_icon": "asset-hand-duotone",
@@ -344,12 +344,11 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-05 00:10:00.000000",
+ "modified": "2026-10-27 15:20:18.927923",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Assets",
  "owner": "Administrator",
- "sequence_id": 0.0,
  "standard": 1,
  "title": "Assets"
 }

@@ -208,7 +208,6 @@
   {
    "fieldname": "user_remark",
    "fieldtype": "Small Text",
-   "hidden": 1,
    "label": "User Remark",
    "no_copy": 1,
    "oldfieldname": "user_remark",
@@ -685,7 +684,7 @@
    "table_fieldname": "payment_entries"
   }
  ],
- "modified": "2026-10-16 20:33:02.005991",
+ "modified": "2026-11-16 10:39:59.346356",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry",

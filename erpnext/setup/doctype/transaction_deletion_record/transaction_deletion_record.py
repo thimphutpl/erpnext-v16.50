@@ -117,17 +117,10 @@ class TransactionDeletionRecord(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
+		from erpnext.accounts.doctype.transaction_deletion_record_details.transaction_deletion_record_details import TransactionDeletionRecordDetails
+		from erpnext.setup.doctype.transaction_deletion_record_item.transaction_deletion_record_item import TransactionDeletionRecordItem
+		from erpnext.setup.doctype.transaction_deletion_record_to_delete.transaction_deletion_record_to_delete import TransactionDeletionRecordToDelete
 		from frappe.types import DF
-
-		from erpnext.accounts.doctype.transaction_deletion_record_details.transaction_deletion_record_details import (
-			TransactionDeletionRecordDetails,
-		)
-		from erpnext.setup.doctype.transaction_deletion_record_item.transaction_deletion_record_item import (
-			TransactionDeletionRecordItem,
-		)
-		from erpnext.setup.doctype.transaction_deletion_record_to_delete.transaction_deletion_record_to_delete import (
-			TransactionDeletionRecordToDelete,
-		)
 
 		amended_from: DF.Link | None
 		clear_notifications_status: DF.Literal["Pending", "Completed", "Skipped"]
