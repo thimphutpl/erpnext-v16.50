@@ -188,7 +188,7 @@
    "fieldtype": "Select",
    "label": "Reference Type",
    "no_copy": 1,
-   "options": "\nSales Invoice\nPurchase Invoice\nJournal Entry\nSales Order\nPurchase Order\nExpense Claim\nAsset\nLoan\nPayroll Entry\nEmployee Advance\nExchange Rate Revaluation\nInvoice Discounting\nFees\nFull and Final Statement\nPayment Entry\nBank Transaction\nEmployee Benefits\nTravel Authorization\nTravel Claim\nOvertime Application\nLeave Encashment",
+   "options": "\nSales Invoice\nPurchase Invoice\nJournal Entry\nSales Order\nPurchase Order\nExpense Claim\nAsset\nLoan\nPayroll Entry\nEmployee Advance\nExchange Rate Revaluation\nInvoice Discounting\nFees\nFull and Final Statement\nPayment Entry\nBank Transaction\nEmployee Benefits\nTravel Authorization\nTravel Claim\nOvertime Application\nLeave Encashment\nLeave Travel Concession",
    "search_index": 1
   },
   {
@@ -296,7 +296,7 @@
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-11-17 20:45:54.054304",
+ "modified": "2026-11-21 16:09:12.922233",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry Account",

@@ -38,7 +38,7 @@ class JournalEntryAccount(Document):
 		reference_detail_no: DF.Data | None
 		reference_due_date: DF.Date | None
 		reference_name: DF.DynamicLink | None
-		reference_type: DF.Literal["", "Sales Invoice", "Purchase Invoice", "Journal Entry", "Sales Order", "Purchase Order", "Expense Claim", "Asset", "Loan", "Payroll Entry", "Employee Advance", "Exchange Rate Revaluation", "Invoice Discounting", "Fees", "Full and Final Statement", "Payment Entry", "Bank Transaction", "Employee Benefits", "Travel Authorization", "Travel Claim", "Overtime Application", "Leave Encashment"]
+		reference_type: DF.Literal["", "Sales Invoice", "Purchase Invoice", "Journal Entry", "Sales Order", "Purchase Order", "Expense Claim", "Asset", "Loan", "Payroll Entry", "Employee Advance", "Exchange Rate Revaluation", "Invoice Discounting", "Fees", "Full and Final Statement", "Payment Entry", "Bank Transaction", "Employee Benefits", "Travel Authorization", "Travel Claim", "Overtime Application", "Leave Encashment", "Leave Travel Concession"]
 		user_remark: DF.SmallText | None
 	# end: auto-generated types
 
