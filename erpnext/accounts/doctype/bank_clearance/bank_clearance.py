@@ -334,7 +334,50 @@ def get_payment_entries_for_bank_clearance(
 		paid_purchase_invoices_query.orderby(pi.posting_date).orderby(pi.name, order=Order.desc)
 	).run(as_dict=True)
 
+   
+
 	pos_sales_invoices = []
+
+	tds_remittance = frappe.db.sql(
+		"""
+		SELECT
+			'TDS Remittance' AS payment_document,
+			name AS payment_entry,
+			cheque_no AS cheque_number,
+			cheque_date,
+			total_tds AS credit,
+			0 AS debit,
+			posting_date,
+			NULL AS against_account,
+			clearance_date,
+			NULL AS account_currency
+		FROM `tabTDS Remittance`
+		WHERE
+			credit_account = %(account)s
+			AND docstatus = 1
+			AND posting_date >= %(from)s
+			AND posting_date <= %(to)s
+			{condition}
+		ORDER BY posting_date ASC, name DESC
+		""".format(
+			condition=(
+				"""
+				AND (
+					clearance_date IS NULL
+					OR clearance_date = '0000-00-00'
+				)
+				"""
+				if not include_reconciled_entries
+				else ""
+			)
+		),
+		{
+			"account": account,
+			"from": from_date,
+			"to": to_date,
+		},
+		as_dict=True,
+	)
 
 	if include_pos_transactions:
 		si_payment = frappe.qb.DocType("Sales Invoice Payment")
@@ -379,6 +422,7 @@ def get_payment_entries_for_bank_clearance(
 		+ list(journal_entries)
 		+ list(pos_sales_invoices)
 		+ list(paid_purchase_invoices)
+		+ list(tds_remittance)
 	)
 
 	return entries

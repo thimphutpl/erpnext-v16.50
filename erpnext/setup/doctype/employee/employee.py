@@ -18,7 +18,6 @@ from erpnext.utilities.transaction_base import delete_events
 class EmployeeUserDisabledError(frappe.ValidationError):
 	pass
 
-
 class InactiveEmployeeStatusError(frappe.ValidationError):
 	pass
 
@@ -97,6 +96,7 @@ class Employee(NestedSet):
 		holiday_list: DF.Link | None
 		house_number: DF.Data | None
 		image: DF.AttachImage | None
+		import_file: DF.Attach | None
 		increment_cycle: DF.Literal["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 		internal_work_history: DF.Table[EmployeeInternalWorkHistory]
 		job_applicant: DF.Link | None
@@ -120,6 +120,7 @@ class Employee(NestedSet):
 		pf_number: DF.Data | None
 		pf_tiers: DF.Data | None
 		place_of_issue: DF.Data | None
+		pms_group: DF.Link | None
 		prefered_contact_email: DF.Literal["", "Company Email", "Personal Email", "User ID"]
 		prefered_email: DF.Data | None
 		promotion_cycle: DF.Literal["", "January", "July"]
@@ -414,6 +415,7 @@ def get_employee_email(employee_doc):
 
 
 def get_holiday_list_for_employee(employee, raise_exception=True):
+	
 	if employee:
 		holiday_list, company = frappe.get_cached_value("Employee", employee, ["holiday_list", "company"])
 	else:
@@ -422,11 +424,39 @@ def get_holiday_list_for_employee(employee, raise_exception=True):
 
 	if not holiday_list:
 		holiday_list = frappe.get_cached_value("Company", company, "default_holiday_list")
+		
 
-	if not holiday_list and raise_exception:
-		frappe.throw(
-			_("Please set a default Holiday List for Employee {0} or Company {1}").format(employee, company)
-		)
+	if not holiday_list and employee:
+		doc = frappe.get_doc("Employee", employee)
+
+		holiday_list = None
+		if doc.branch:
+			holiday_list = frappe.db.get_value(
+				"Holiday List Assignment",
+				{
+					"applicable_for": "Branch",
+					"assigned_to": doc.branch,
+					"company": doc.company,
+					"docstatus": 1,
+					"from_date": ["<=", frappe.utils.getdate()],
+				},
+				"holiday_list",
+				order_by="from_date desc",
+			)
+
+# Temporary debugging only — stops the operation.
+		
+		# frappe.throw(
+		# 	_("Please set a default Holiday List for Employee {0} or Company {1}").format(employee, company)
+		# )
+		if not holiday_list and raise_exception:
+			frappe.throw(
+				_("No Holiday List found for Employee {0}. Please check the Holiday List Assignment for their Branch and Company.").format(
+					employee
+				)
+			)
+
+	return holiday_list
 
 	return holiday_list
 

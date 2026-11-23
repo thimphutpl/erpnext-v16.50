@@ -128,12 +128,13 @@ def get_entries_for_bank_reconciliation_statement(filters):
 	payment_entries = get_payment_entries(filters)
 
 	purchase_invoices = get_purchase_invoices(filters)
+	tds_entries = get_tds_entries(filters)
 
 	pos_entries = []
 	if filters.include_pos_transactions:
 		pos_entries = get_pos_entries(filters)
 
-	return list(journal_entries) + list(payment_entries) + list(pos_entries) + list(purchase_invoices)
+	return list(journal_entries) + list(payment_entries) + list(pos_entries) + list(purchase_invoices)+list(tds_entries)
 
 
 def get_journal_entries(filters):
@@ -276,7 +277,35 @@ def get_amounts_not_reflected_in_system(filters):
 		amount += frappe.get_attr(method_name)(filters) or 0.0
 
 	return amount
-
+def get_tds_entries(filters):
+	return frappe.db.sql(
+		"""
+		SELECT
+			'TDS Remittance' AS payment_document,
+			tds.name AS payment_entry,
+			0 AS debit,
+			tds.total_tds AS credit,
+			tds.posting_date,
+			NULL AS against_account,
+			tds.cheque_no AS reference_no,
+			tds.cheque_date AS ref_date,
+			tds.clearance_date,
+			account.account_currency
+		FROM `tabTDS Remittance` tds
+		INNER JOIN `tabAccount` account
+			ON account.name = tds.credit_account
+		WHERE
+			tds.credit_account = %(account)s
+			AND tds.docstatus = 1
+			AND tds.posting_date <= %(report_date)s
+			AND IFNULL(tds.clearance_date, '4000-01-01') > %(report_date)s
+		ORDER BY
+			tds.posting_date ASC,
+			tds.name DESC
+		""",
+		filters,
+		as_dict=True,
+	)
 
 def get_amounts_not_reflected_in_system_for_bank_reconciliation_statement(filters):
 	je = frappe.qb.DocType("Journal Entry")
@@ -338,7 +367,23 @@ def get_amounts_not_reflected_in_system_for_bank_reconciliation_statement(filter
 
 	pi_amount = flt(pi_amount[0].amount) if pi_amount else 0.0
 
-	return je_amount + pe_amount + pi_amount
+	tds_amount = frappe.db.sql(
+		"""
+		SELECT COALESCE(SUM(tds.total_tds), 0) AS amount
+		FROM `tabTDS Remittance` tds
+		WHERE
+			tds.credit_account = %(account)s
+			AND tds.company = %(company)s
+			AND tds.docstatus = 1
+			AND tds.posting_date > %(report_date)s
+			AND tds.clearance_date <= %(report_date)s
+		""",
+		filters,
+		as_dict=True,
+	)
+	tds_amount = flt(tds_amount[0].amount) if tds_amount else 0.0
+
+	return je_amount + pe_amount + pi_amount + tds_amount
 
 
 def get_balance_row(label, amount, account_currency):

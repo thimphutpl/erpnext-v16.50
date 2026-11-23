@@ -92,6 +92,7 @@ class Company(NestedSet):
 		disposal_account: DF.Link | None
 		domain: DF.Data | None
 		email: DF.Data | None
+		employer_contribution_pf_account: DF.Link | None
 		enable_item_wise_inventory_account: DF.Check
 		enable_perpetual_inventory: DF.Check
 		enable_provisional_accounting_for_non_stock_items: DF.Check

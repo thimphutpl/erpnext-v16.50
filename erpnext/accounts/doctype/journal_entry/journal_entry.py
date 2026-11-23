@@ -6,6 +6,18 @@ import frappe
 from frappe import _, msgprint, scrub
 from frappe.core.doctype.submission_queue.submission_queue import queue_submission
 from frappe.utils import comma_and, cstr, flt, fmt_money, formatdate, get_link_to_form, nowdate
+from frappe.utils import (
+	comma_and,
+	cstr,
+	flt,
+	fmt_money,
+	formatdate,
+	get_link_to_form,
+	nowdate,
+	now_datetime,
+	get_datetime,
+	cint
+)
 
 import erpnext
 from erpnext.accounts.deferred_revenue import get_deferred_booking_accounts
@@ -45,10 +57,9 @@ class JournalEntry(AccountsController):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
 		from erpnext.accounts.doctype.journal_entry_account.journal_entry_account import JournalEntryAccount
-		from erpnext.accounts.doctype.tax_withholding_entry.tax_withholding_entry import TaxWithholdingEntry
+		from frappe.types import DF
+		from integrasuite_budget.overrides.erpnext.accounts.doctype.tax_withholding_entry import CustomTaxWithholdingEntry
 
 		accounts: DF.Table[JournalEntryAccount]
 		amended_from: DF.Link | None
@@ -56,6 +67,7 @@ class JournalEntry(AccountsController):
 		auto_repeat: DF.Link | None
 		bill_date: DF.Date | None
 		bill_no: DF.Data | None
+		branch: DF.Link | None
 		cheque_date: DF.Date | None
 		cheque_no: DF.Data | None
 		clearance_date: DF.Date | None
@@ -87,7 +99,7 @@ class JournalEntry(AccountsController):
 		stock_asset_account: DF.Link | None
 		stock_entry: DF.Link | None
 		tax_withholding_category: DF.Link | None
-		tax_withholding_entries: DF.Table[TaxWithholdingEntry]
+		tax_withholding_entries: DF.Table[CustomTaxWithholdingEntry]
 		tax_withholding_group: DF.Link | None
 		title: DF.Data | None
 		total_amount: DF.Currency
@@ -96,26 +108,7 @@ class JournalEntry(AccountsController):
 		total_credit: DF.Currency
 		total_debit: DF.Currency
 		user_remark: DF.SmallText | None
-		voucher_type: DF.Literal[
-			"Journal Entry",
-			"Inter Company Journal Entry",
-			"Bank Entry",
-			"Cash Entry",
-			"Credit Card Entry",
-			"Debit Note",
-			"Credit Note",
-			"Contra Entry",
-			"Excise Entry",
-			"Write Off Entry",
-			"Opening Entry",
-			"Depreciation Entry",
-			"Asset Disposal",
-			"Periodic Accounting Entry",
-			"Exchange Rate Revaluation",
-			"Exchange Gain Or Loss",
-			"Deferred Revenue",
-			"Deferred Expense",
-		]
+		voucher_type: DF.Literal["Journal Entry", "Inter Company Journal Entry", "Bank Entry", "Cash Entry", "Credit Card Entry", "Debit Note", "Credit Note", "Contra Entry", "Excise Entry", "Write Off Entry", "Opening Entry", "Depreciation Entry", "Asset Disposal", "Periodic Accounting Entry", "Exchange Rate Revaluation", "Exchange Gain Or Loss", "Deferred Revenue", "Deferred Expense"]
 		write_off_amount: DF.Currency
 		write_off_based_on: DF.Literal["Accounts Receivable", "Accounts Payable"]
 	# end: auto-generated types
@@ -216,9 +209,48 @@ class JournalEntry(AccountsController):
 		self.check_credit_limit()
 		self.update_asset_value()
 		self.update_inter_company_jv()
+		self.update_advance_paid()
 		self.update_invoice_discounting()
+		self.update_reference_document()
 		JournalTaxWithholding(self).on_submit()
+		
+		
+	# def update_advance_paid(self):
+	# 	# frappe.throw("hi")
+	# 	advance_paid = frappe._dict()
+	# 	for d in self.get("accounts"):
+			
+	# 		if d.is_advance:
+				
+	# 			if d.reference_type in frappe.get_hooks("advance_payment_doctypes"):
+					
+	# 				advance_paid.setdefault(d.reference_type, []).append(
+	# 					d.reference_name
+	# 				)
 
+	def update_advance_paid(self):
+		for d in self.get("accounts"):
+			if (
+				d.is_advance
+				and d.reference_type == "Employee Advance"
+				and d.reference_name
+			):
+				paid_amount = sum(
+					flt(row.debit_in_account_currency)
+					for row in self.get("accounts")
+					if row.reference_type == "Employee Advance"
+					and row.reference_name == d.reference_name
+				)
+
+				frappe.db.set_value(
+					"Employee Advance",
+					d.reference_name,
+					"paid_amount",
+					paid_amount,
+				)
+
+				doc = frappe.get_doc("Employee Advance", d.reference_name)
+				doc.set_status(update=True)
 	@frappe.whitelist()
 	def get_balance_for_periodic_accounting(self):
 		self.validate_company_for_periodic_accounting()
@@ -331,6 +363,7 @@ class JournalEntry(AccountsController):
 		self.unlink_inter_company_jv()
 		self.unlink_asset_adjustment_entry()
 		self.update_invoice_discounting()
+		self.update_reference_document()
 
 	def get_title(self):
 		return self.pay_to_recd_from or self.accounts[0].account
@@ -421,6 +454,121 @@ class JournalEntry(AccountsController):
 		frappe.db.set_value(
 			"Asset Finance Book", fb_row.name, "value_after_depreciation", fb_row.value_after_depreciation
 		)
+
+	def update_reference_document(self, cancel=False):
+		
+		for d in self.get("accounts"):
+			# update project advance
+			if cancel:
+				if d.reference_type == "Travel Advance" and d.reference_name:
+					doc = frappe.get_doc("Travel Advance", d.reference_name)
+					doc.db_set("paid_amount", flt(doc.paid_amount) - flt(d.debit))
+					doc.db_set(
+						"journal_entry_status",
+						"Cancelled on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				if d.reference_type == "Travel Claim" and d.reference_name:
+					doc = frappe.get_doc("Travel Claim", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Cancelled on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "Employee Advance" and d.reference_name:
+
+					doc = frappe.get_doc("Employee Advance", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Cancelled on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "Leave Encashment" and d.reference_name:
+					doc = frappe.get_doc("Leave Encashment", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Cancelled on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "POL Advance" and d.reference_name:
+					doc = frappe.get_doc("POL Advance", d.reference_name)
+					doc.db_set("status", "Cancelled")
+					doc.db_set(
+						"journal_entry_status",
+						"Cancelled on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "Cash Deposit Entry" and d.reference_name:
+					doc = frappe.get_doc("Cash Deposit Entry", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Cancelled on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				# removing references
+				d.reference_type = ""
+				d.reference_name = ""
+				d.db_update()
+			else:
+				if d.reference_type == "Travel Advance" and d.reference_name:
+					doc = frappe.get_doc("Travel Advance", d.reference_name)
+					doc.db_set("paid_amount", d.debit)
+					doc.db_set(
+						"journal_entry_status",
+						"Paid on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "Travel Claim" and d.reference_name:
+					doc = frappe.get_doc("Travel Claim", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Paid on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "Employee Advance" and d.reference_name:
+					
+					doc = frappe.get_doc("Employee Advance", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Paid on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "Leave Encashment" and d.reference_name:
+					doc = frappe.get_doc("Leave Encashment", d.reference_name)
+					doc.db_set(
+						"journal_entry_status",
+						"Paid on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
+
+				elif d.reference_type == "POL Advance" and d.reference_name:
+					doc = frappe.get_doc("POL Advance", d.reference_name)
+					doc.db_set("status", "Paid")
+					doc.db_set(
+						"journal_entry_status",
+						"Paid on {0}".format(
+							now_datetime().strftime("%Y-%m-%d %H:%M:%S")
+						),
+					)
 
 	def update_journal_entry_link_on_depr_schedule(self, asset, je_row):
 		depr_schedule = get_depr_schedule(asset.name, "Active", self.finance_book)
@@ -1202,7 +1350,11 @@ class JournalEntry(AccountsController):
 					"advance_voucher_no": d.advance_voucher_no,
 				}
 
-				if d.reference_type in advance_doctypes:
+				# if d.reference_type in advance_doctypes:
+				if (
+					d.reference_type in advance_doctypes
+					and d.reference_type != "Leave Encashment"
+				):
 					row.update(
 						{
 							"against_voucher_type": self.doctype,

@@ -19,7 +19,7 @@ frappe.ui.form.on("Bank Account", {
 		});
 	},
 	refresh: function (frm) {
-		frappe.dynamic_link = { doc: frm.doc, fieldname: "name", doctype: "Bank Account" };
+		//frappe.dynamic_link = { doc: frm.doc, fieldname: "name", doctype: "Bank Account" };
 
 		frm.toggle_display(["address_html", "contact_html"], !frm.doc.__islocal);
 

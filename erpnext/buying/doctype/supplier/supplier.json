@@ -125,7 +125,7 @@
   {
    "fieldname": "default_bank_account",
    "fieldtype": "Link",
-   "label": "Company Bank Account",
+   "label": "Bank Account",
    "options": "Bank Account"
   },
   {
@@ -584,7 +584,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2026-10-18 18:55:07.554862",
+ "modified": "2026-11-16 16:37:56.947059",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
