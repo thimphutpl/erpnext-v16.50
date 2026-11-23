@@ -10,6 +10,19 @@ frappe.query_reports["TDS Computation Summary"] = {
 			options: "Company",
 			default: frappe.defaults.get_default("company"),
 		},
+        {
+            fieldname:"cost_center",
+            label:__("Cost Center"),
+            fieldtype:"Link",
+            options:"Cost Center"
+
+        },
+        {
+            fieldname:"tax_withholding_category",
+            label:__("Tax Withholding Category"),
+            fieldtype:"Link",
+            options:"Tax Withholding Category"
+        },
 		{
 			fieldname: "party_type",
 			label: __("Party Type"),

@@ -88,6 +88,14 @@ class TaxWithholdingDetailsReport:
 			query = query.where(twe.party_type == self.filters.party_type)
 		if self.filters.party:
 			query = query.where(twe.party == self.filters.party)
+		if self.filters.get("tax_withholding_category"):
+			query = query.where(
+				twe.tax_withholding_category == self.filters.tax_withholding_category
+			)
+		if self.filters.get("cost_center"):
+			query = query.where(
+				twe.cost_center == self.filters.cost_center
+			)
 
 		return query
 
@@ -193,6 +201,7 @@ class TaxWithholdingDetailsReport:
 	def get_columns(self):
 		party_type = self.filters.get("party_type", "Party")
 		return [
+			
 			{
 				"label": _("Tax Withholding Category"),
 				"options": "Tax Withholding Category",
