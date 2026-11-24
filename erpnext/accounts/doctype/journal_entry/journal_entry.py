@@ -81,6 +81,7 @@ class JournalEntry(AccountsController):
 		ignore_tax_withholding_threshold: DF.Check
 		inter_company_journal_entry_reference: DF.Link | None
 		is_opening: DF.Literal["No", "Yes"]
+		is_scrapped: DF.Check
 		is_system_generated: DF.Check
 		letter_head: DF.Link | None
 		mode_of_payment: DF.Link | None
@@ -590,14 +591,24 @@ class JournalEntry(AccountsController):
 					and d.reference_name
 					and d.reference_name not in disposed_assets
 				):
-					frappe.db.set_value(
-						"Asset",
-						d.reference_name,
-						{
-							"disposal_date": self.posting_date,
-							"journal_entry_for_scrap": self.name,
-						},
-					)
+					if self.is_scrapped:
+						frappe.db.set_value(
+							"Asset",
+							d.reference_name,
+							{
+								"disposal_date": self.posting_date,
+								"journal_entry_for_scrap": self.name,
+							},
+						)
+					else:
+						frappe.db.set_value(
+							"Asset",
+							d.reference_name,
+							{
+								"disposal_date": self.posting_date,
+								"journal_entry_for_donate": self.name,
+							},
+						)
 					asset_doc = frappe.get_doc("Asset", d.reference_name)
 					asset_doc.set_status()
 					disposed_assets.append(d.reference_name)

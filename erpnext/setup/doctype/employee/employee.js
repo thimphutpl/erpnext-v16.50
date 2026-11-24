@@ -13,6 +13,11 @@ erpnext.setup.EmployeeController = class EmployeeController extends frappe.ui.fo
 		this.frm.fields_dict.reports_to.get_query = function (doc, cdt, cdn) {
 			return { query: "erpnext.controllers.queries.employee_query" };
 		};
+
+
+
+   
+
 	}
 
 	refresh() {
@@ -21,6 +26,17 @@ erpnext.setup.EmployeeController = class EmployeeController extends frappe.ui.fo
 };
 
 frappe.ui.form.on("Employee", {
+    setup(frm) {
+        frm.set_query("bank_branch", "employee_bank_accounts", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
+
+            return {
+                filters: {
+                    bank_name: row.bank
+                }
+            };
+        });
+    },
 	
 	refresh(frm) {
 		frappe.after_ajax(() => {
@@ -134,7 +150,7 @@ frappe.ui.form.on("Employee", {
 			return {
 				filters: {
 					company: frm.doc.company,
-					// is_department: 1
+					is_department: 1
 				},
 			};
 		});

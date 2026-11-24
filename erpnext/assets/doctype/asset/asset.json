@@ -19,9 +19,13 @@
   "column_break_3",
   "company",
   "asset_category",
+  "asset_sub_category",
   "asset_type",
   "maintenance_required",
   "calculate_depreciation",
+  "is_land",
+  "is_flat",
+  "is_vehicle",
   "purchase_details_section",
   "purchase_receipt",
   "purchase_receipt_item",
@@ -35,13 +39,43 @@
   "purchase_amount",
   "asset_quantity",
   "additional_asset_cost",
+  "vehicle_section",
+  "vehicle_number",
+  "vehicle_type",
+  "column_break_tdpm",
+  "engine_number",
+  "chassis_nuber",
+  "land_section",
+  "land_area",
+  "land_type",
+  "column_break_nlsk",
+  "land_usage",
+  "flat_section",
+  "construction_year",
+  "building_usage",
+  "commercial_cum_residential",
+  "flat_no",
+  "column_break_lcta",
+  "occupancy_status",
+  "office",
+  "residential",
+  "information_section",
+  "dzongkhangthromde",
+  "gewog",
+  "village",
+  "column_break_gmpm",
+  "thram_number",
+  "plot_number",
   "section_break_uiyd",
   "column_break_bbwr",
+  "asset_issue_details",
+  "qr_code_data",
   "column_break_bfkm",
   "total_asset_cost",
   "depreciation_tab",
   "column_break_wqzi",
   "opening_accumulated_depreciation",
+  "income_tax_opening_depreciation_amount",
   "is_fully_depreciated",
   "column_break_33",
   "opening_number_of_booked_depreciations",
@@ -58,8 +92,9 @@
   "depreciation_schedule_view",
   "other_info_tab",
   "accounting_dimensions_section",
-  "cost_center",
+  "branch",
   "dimension_col_break",
+  "cost_center",
   "asset_owner_section",
   "asset_owner",
   "column_break_yeds",
@@ -82,6 +117,7 @@
   "depr_entry_posting_status",
   "column_break_51",
   "journal_entry_for_scrap",
+  "journal_entry_for_donate",
   "split_from",
   "amended_from",
   "booked_fixed_asset",
@@ -91,6 +127,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "options": "ACC-ASS-.YYYY.-"
   },
@@ -192,15 +229,19 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Custodian",
-   "options": "Employee"
+   "options": "Employee",
+   "reqd": 1
   },
   {
+   "fetch_from": "branch.cost_center",
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
-   "options": "Cost Center"
+   "options": "Cost Center",
+   "reqd": 1
   },
   {
+   "fetch_from": "custodian.department",
    "fieldname": "department",
    "fieldtype": "Link",
    "label": "Department",
@@ -210,7 +251,7 @@
    "fieldname": "purchase_date",
    "fieldtype": "Date",
    "label": "Purchase Date",
-   "read_only_depends_on": "eval:doc.asset_type != \"Existing Asset\" && doc.asset_type != \"Composite Asset\"",
+   "read_only_depends_on": "eval:doc.asset_type != \"Existing Asset\" && doc.asset_type != \"Is Donated Asset\"",
    "reqd": 1
   },
   {
@@ -270,7 +311,7 @@
    "fieldtype": "Select",
    "in_import_template": 1,
    "label": "Depreciation Method",
-   "options": "\nStraight Line\nDouble Declining Balance\nWritten Down Value\nManual"
+   "options": "\nStraight Line\nManual"
   },
   {
    "fieldname": "value_after_depreciation",
@@ -342,6 +383,7 @@
    "default": "0",
    "fieldname": "maintenance_required",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Maintenance Required"
   },
   {
@@ -352,7 +394,7 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "Draft\nSubmitted\nCancelled\nPartially Depreciated\nFully Depreciated\nSold\nScrapped\nIn Maintenance\nOut of Order\nIssue\nReceipt\nCapitalized\nWork In Progress",
+   "options": "Draft\nSubmitted\nCancelled\nPartially Depreciated\nFully Depreciated\nSold\nScrapped\nIn Maintenance\nOut of Order\nIssue\nReceipt\nCapitalized\nWork In Progress\nDonated",
    "read_only": 1
   },
   {
@@ -369,7 +411,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.asset_type != \"Composite Asset\" && doc.asset_type != \"Existing Asset\"",
+   "depends_on": "eval:doc.asset_type != \"Existing Asset\" && doc.asset_type != \"Is Donated Asset\"",
    "fieldname": "purchase_receipt",
    "fieldtype": "Link",
    "label": "Purchase Receipt",
@@ -378,7 +420,7 @@
    "print_hide": 1
   },
   {
-   "depends_on": "eval:doc.asset_type != \"Composite Asset\" && doc.asset_type != \"Existing Asset\"",
+   "depends_on": "eval:doc.asset_type != \"Existing Asset\" && doc.asset_type != \"Is Donated Asset\"",
    "fieldname": "purchase_invoice",
    "fieldtype": "Link",
    "label": "Purchase Invoice",
@@ -459,7 +501,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:(doc.asset_type == \"Existing Asset\" && !doc.calculate_depreciation) || doc.calculate_depreciation",
+   "depends_on": "eval:((doc.asset_type != \"Existing Asset\" && doc.asset_type != \"Is Donated Asset\") && !doc.calculate_depreciation) || doc.calculate_depreciation",
    "fieldname": "is_fully_depreciated",
    "fieldtype": "Check",
    "label": "Is Fully Depreciated",
@@ -537,7 +579,7 @@
   {
    "fieldname": "section_break_jtou",
    "fieldtype": "Section Break",
-   "label": "Additional Info"
+   "label": "Information"
   },
   {
    "fieldname": "net_purchase_amount",
@@ -553,7 +595,7 @@
    "fieldtype": "Select",
    "in_import_template": 1,
    "label": "Asset Type",
-   "options": "\nExisting Asset\nComposite Asset\nComposite Component"
+   "options": "\nExisting Asset\nDonated Asset"
   },
   {
    "fieldname": "column_break_wqzi",
@@ -596,6 +638,216 @@
   {
    "fieldname": "column_break_yeds",
    "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "item_code",
+   "fetch_from": "item_code.asset_sub_category",
+   "fieldname": "asset_sub_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Asset Sub Category",
+   "options": "Asset Sub Category",
+   "read_only": 1
+  },
+  {
+   "fieldname": "asset_issue_details",
+   "fieldtype": "Link",
+   "label": "Asset Issue Details",
+   "options": "Asset Issue Details",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:(doc.asset_type == \"Existing Asset\" || doc.asset_type == \"Donated Asset\")",
+   "fieldname": "income_tax_opening_depreciation_amount",
+   "fieldtype": "Currency",
+   "label": "Income Tax Opening Depreciation Amount"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:(doc.is_land || doc.is_flat)",
+   "fieldname": "information_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Info"
+  },
+  {
+   "fieldname": "dzongkhangthromde",
+   "fieldtype": "Data",
+   "label": "Dzongkhang/Thromde"
+  },
+  {
+   "fieldname": "gewog",
+   "fieldtype": "Data",
+   "label": "Gewog"
+  },
+  {
+   "fieldname": "thram_number",
+   "fieldtype": "Data",
+   "label": "Thram Number"
+  },
+  {
+   "fieldname": "land_area",
+   "fieldtype": "Data",
+   "label": "Land Area"
+  },
+  {
+   "fieldname": "land_usage",
+   "fieldtype": "Data",
+   "label": "Land Usage"
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Data",
+   "label": "Village"
+  },
+  {
+   "fieldname": "land_type",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Land Type",
+   "options": "Land Type"
+  },
+  {
+   "fieldname": "plot_number",
+   "fieldtype": "Data",
+   "label": "Plot Number"
+  },
+  {
+   "fieldname": "construction_year",
+   "fieldtype": "Data",
+   "label": "Construction Year"
+  },
+  {
+   "fieldname": "building_usage",
+   "fieldtype": "Data",
+   "label": "Building Usage"
+  },
+  {
+   "fieldname": "occupancy_status",
+   "fieldtype": "Data",
+   "label": "Occupancy Status"
+  },
+  {
+   "fieldname": "office",
+   "fieldtype": "Data",
+   "label": "Office"
+  },
+  {
+   "fieldname": "residential",
+   "fieldtype": "Data",
+   "label": "Residential"
+  },
+  {
+   "fieldname": "commercial_cum_residential",
+   "fieldtype": "Data",
+   "label": "Commercial cum Residential"
+  },
+  {
+   "default": "0",
+   "fetch_from": "asset_category.is_land",
+   "fieldname": "is_land",
+   "fieldtype": "Check",
+   "label": "Is Land",
+   "read_only": 1
+  },
+  {
+   "fieldname": "vehicle_number",
+   "fieldtype": "Data",
+   "label": "Vehicle Number"
+  },
+  {
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number"
+  },
+  {
+   "fieldname": "chassis_nuber",
+   "fieldtype": "Data",
+   "label": "Chassis Nuber"
+  },
+  {
+   "fieldname": "vehicle_type",
+   "fieldtype": "Link",
+   "label": "Vehicle Type",
+   "options": "Vehicle Type"
+  },
+  {
+   "default": "0",
+   "fetch_from": "asset_category.is_flat",
+   "fieldname": "is_flat",
+   "fieldtype": "Check",
+   "label": "Is Flat",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fetch_from": "asset_category.is_vehicle",
+   "fieldname": "is_vehicle",
+   "fieldtype": "Check",
+   "label": "Is Vehicle",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.is_land",
+   "fieldname": "land_section",
+   "fieldtype": "Section Break",
+   "label": "Land Information"
+  },
+  {
+   "fieldname": "column_break_nlsk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_lcta",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.is_vehicle",
+   "fieldname": "vehicle_section",
+   "fieldtype": "Section Break",
+   "label": "Vehicle Information"
+  },
+  {
+   "fieldname": "column_break_tdpm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "flat_no",
+   "fieldtype": "Data",
+   "label": "Flat No"
+  },
+  {
+   "depends_on": "eval: doc.is_flat",
+   "fieldname": "flat_section",
+   "fieldtype": "Section Break",
+   "label": "Flat Information"
+  },
+  {
+   "fieldname": "column_break_gmpm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "journal_entry_for_donate",
+   "fieldtype": "Link",
+   "label": "Journal Entry for Donate",
+   "no_copy": 1,
+   "options": "Journal Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "qr_code_data",
+   "fieldtype": "Long Text",
+   "hidden": 1,
+   "label": "QR Code Data",
+   "read_only": 1
   }
  ],
  "icon": "building",
@@ -640,7 +892,7 @@
    "link_fieldname": "target_asset"
   }
  ],
- "modified": "2026-09-30 23:24:44.044604",
+ "modified": "2026-11-23 16:15:35.874388",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset",

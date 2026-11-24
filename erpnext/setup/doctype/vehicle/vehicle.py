@@ -22,6 +22,7 @@ class Vehicle(Document):
 		carbon_check_date: DF.Date | None
 		chassis_no: DF.Data | None
 		color: DF.Data | None
+		company: DF.Link | None
 		doors: DF.Int
 		employee: DF.Link | None
 		end_date: DF.Date | None
@@ -35,6 +36,7 @@ class Vehicle(Document):
 		policy_no: DF.Data | None
 		start_date: DF.Date | None
 		uom: DF.Link
+		vehicle_type: DF.Link | None
 		vehicle_value: DF.Currency
 		wheels: DF.Int
 	# end: auto-generated types

@@ -22,6 +22,7 @@
   "posting_date",
   "posting_time",
   "set_posting_time",
+  "actual_receipt_date",
   "column_break_12",
   "company",
   "apply_putaway_rule",
@@ -1301,6 +1302,12 @@
    "label": "Title",
    "no_copy": 1,
    "print_hide": 1
+  },
+  {
+   "fieldname": "actual_receipt_date",
+   "fieldtype": "Date",
+   "label": "Actual Receipt Date",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
@@ -1308,7 +1315,7 @@
  "idx": 261,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-11-04 12:20:54.496264",
+ "modified": "2026-11-19 16:45:46.488834",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",

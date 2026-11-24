@@ -4,7 +4,13 @@
 frappe.ui.form.on("Department", {
 	onload: function (frm) {
 		frm.set_query("parent_department", function () {
-			return { filters: [["Department", "is_group", "=", 1]] };
+			const filters = [["Department", "is_group", "=", 1]];
+	
+			if (frm.doc.company) {
+				filters.push(["Department", "company", "=", frm.doc.company]);
+			}
+	
+			return { filters };
 		});
 	},
 	refresh: function (frm) {

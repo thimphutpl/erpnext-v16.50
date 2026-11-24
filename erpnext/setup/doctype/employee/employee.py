@@ -33,8 +33,8 @@ class Employee(NestedSet):
 		from erpnext.setup.doctype.employee_internal_work_history.employee_internal_work_history import EmployeeInternalWorkHistory
 		from frappe.types import DF
 		from integrasuite.integrasuite_hr.doctype.award.award import Award
-		from integrasuite.integrasuite_hr.doctype.disciplinary.disciplinary import Disciplinary
 		from integrasuite.integrasuite_hr.doctype.employee_bank_account.employee_bank_account import EmployeeBankAccount
+		from integrasuite.integrasuite_hr.doctype.employee_disciplinary_summary.employee_disciplinary_summary import EmployeeDisciplinarySummary
 		from integrasuite.integrasuite_hr.doctype.employee_family_details.employee_family_details import EmployeeFamilyDetails
 		from integrasuite.integrasuite_hr.doctype.pms_rating.pms_rating import PMSRating
 		from integrasuite.integrasuite_hr.doctype.retirement_benefits_nominees.retirement_benefits_nominees import RetirementBenefitsNominees
@@ -73,6 +73,7 @@ class Employee(NestedSet):
 		emergency_phone_number: DF.Data | None
 		employee: DF.Data | None
 		employee_bank_accounts: DF.Table[EmployeeBankAccount]
+		employee_disciplinary_record: DF.Table[EmployeeDisciplinarySummary]
 		employee_family_details: DF.Table[EmployeeFamilyDetails]
 		employee_group: DF.Link
 		employee_name: DF.Data | None
@@ -138,7 +139,6 @@ class Employee(NestedSet):
 		scheduled_confirmation_date: DF.Date | None
 		section: DF.Link | None
 		status: DF.Literal["Active", "Inactive", "Suspended", "Left"]
-		table_lxgr: DF.Table[Disciplinary]
 		table_xzfj: DF.Table[PMSRating]
 		thram_number: DF.Data | None
 		tpn_number: DF.Data | None

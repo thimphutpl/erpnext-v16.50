@@ -78,6 +78,13 @@ frappe.ui.form.on("Item", {
 				open_form(frm, "Stock Entry", "Stock Entry Detail", "items");
 			},
 		};
+		frm.set_query("asset_sub_category", function() {
+            return {
+                filters: {
+                    asset_category: frm.doc.asset_category,
+                }
+            };
+        });
 	},
 
 	onload: function (frm) {
