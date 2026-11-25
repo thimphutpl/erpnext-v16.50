@@ -39,107 +39,64 @@ frappe.ui.form.on("Employee", {
     },
 	
 	refresh(frm) {
-		frappe.after_ajax(() => {
-			const $connections = $(
-				".form-dashboard-section.form-links"
-			).first();
+		if (frm.is_new()) return;
 
-			const $activity = $(".section-head")
-				.filter(function () {
-					return $(this).text().trim() === "Activity";
-				})
+		frappe.after_ajax(() => {
+			const $form = $(frm.wrapper);
+			const $connections = $form
+				.find(".form-dashboard-section.form-links")
 				.first();
+			const $activity = $form.find(".section-head").filter(function () {
+				return $(this).text().trim() === __("Activity");
+			}).first();
 
 			if (!$connections.length || !$activity.length) return;
+			if ($connections.children(".employee-connections-heading").length) return;
 
-			// Remove previous custom Connections heading
-			$("#employee-connections-heading").remove();
-
-			// Add CSS once to keep connections collapsed
-			// even if the dashboard content is redrawn.
-			if (!$("#employee-connections-style").length) {
+			if (!document.getElementById("employee-connections-style")) {
 				$("head").append(`
 					<style id="employee-connections-style">
 						.form-links.employee-connections-collapsed
-						> :not(#employee-connections-heading) {
+						> :not(.employee-connections-heading) {
 							display: none !important;
 						}
 
-						#employee-connections-heading {
+						.employee-connections-heading {
 							cursor: pointer;
 						}
 					</style>
 				`);
 			}
 
-			// Clone native Activity heading
 			const $heading = $activity.clone(false, false);
+			$heading.removeAttr("id").addClass("employee-connections-heading");
+			$heading.attr({ role: "button", tabindex: "0" });
 
-			$heading
-				.attr("id", "employee-connections-heading")
-				.addClass("collapsed")
-				.attr("tabindex", "0")
-				.attr("role", "button")
-				.attr("aria-expanded", "false");
+			$heading.contents().filter(function () {
+				return this.nodeType === Node.TEXT_NODE && this.textContent.trim();
+			}).first().replaceWith(document.createTextNode(`${__("Connections")} `));
 
-			// Replace heading text
-			$heading.contents()
-				.filter(function () {
-					return this.nodeType === 3 &&
-						this.textContent.trim();
-				})
-				.first()
-				.replaceWith("Connections ");
-
-			// Put heading inside the Connections section
 			$connections.prepend($heading);
 
-			// Match the horizontal position of Activity
-			const activityLeft =
-				$activity[0].getBoundingClientRect().left;
+			function setExpanded(expanded) {
+				$connections.toggleClass("employee-connections-collapsed", !expanded);
+				$heading.toggleClass("collapsed", !expanded);
+				$heading.attr("aria-expanded", String(expanded));
 
-			const headingLeft =
-				$heading[0].getBoundingClientRect().left;
-
-			$heading.css(
-				"margin-left",
-				`${activityLeft - headingLeft}px`
-			);
-
-			// Collapse by default
-			$connections.addClass(
-				"employee-connections-collapsed"
-			);
-
-			function toggleConnections() {
-				const expanding = $connections.hasClass(
-					"employee-connections-collapsed"
-				);
-
-				$connections.toggleClass(
-					"employee-connections-collapsed",
-					!expanding
-				);
-
-				$heading.toggleClass("collapsed", !expanding);
-
-				$heading.attr("aria-expanded", String(expanding));
-
-				// Match native Activity arrow direction
-				$heading.find("use").attr(
-					"href",
-					expanding
-						? "#icon-chevron-down"
-						: "#icon-chevron-right"
-				);
+				const icon = expanded ? "#icon-chevron-down" : "#icon-chevron-right";
+				$heading.find("use").attr({ href: icon, "xlink:href": icon });
 			}
 
-			$heading.on("click", toggleConnections);
+			setExpanded(false);
 
-			$heading.on("keydown", function (e) {
-				if (e.key === "Enter" || e.key === " ") {
-					e.preventDefault();
-					toggleConnections();
+			$heading.on("click", function () {
+				setExpanded($heading.attr("aria-expanded") === "false");
+			});
+
+			$heading.on("keydown", function (event) {
+				if (event.key === "Enter" || event.key === " ") {
+					event.preventDefault();
+					$heading.trigger("click");
 				}
 			});
 		});
