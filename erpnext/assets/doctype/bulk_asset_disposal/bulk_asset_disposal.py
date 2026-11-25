@@ -48,10 +48,10 @@ class BulkAssetDisposal(Document):
 					frappe.throw("{} is under <b>{}</b> category. You can only sell from {} category!".format(data.asset, category, self.asset_category))
 
 	def on_submit(self):
-		if self.scrap == "Scrap Asset":
-			self.scrap_asset()
-		else: 
-			self.sale_asset()
+		# if self.scrap == "Scrap Asset":
+		self.scrap_asset()
+		# else: 
+		# 	self.sale_asset()
 	
 	def before_cancel(self):
 		if self.scrap == "Scrap Asset":
