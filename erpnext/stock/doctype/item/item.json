@@ -25,6 +25,7 @@
   "auto_create_assets",
   "is_grouped_asset",
   "asset_category",
+  "asset_sub_category",
   "asset_naming_series",
   "section_break_zlmj",
   "is_sales_item",
@@ -1111,6 +1112,16 @@
    "fieldname": "item_prices_column",
    "fieldtype": "Column Break",
    "label": "Item Prices"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "depends_on": "is_fixed_asset",
+   "fieldname": "asset_sub_category",
+   "fieldtype": "Link",
+   "in_import_template": 1,
+   "label": "Asset Sub Category",
+   "mandatory_depends_on": "is_fixed_asset",
+   "options": "Asset Sub Category"
   }
  ],
  "icon": "package",
@@ -1118,7 +1129,7 @@
  "image_field": "image",
  "links": [],
  "make_attachments_public": 1,
- "modified": "2026-11-03 12:12:10.277640",
+ "modified": "2026-11-19 16:04:15.290301",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",

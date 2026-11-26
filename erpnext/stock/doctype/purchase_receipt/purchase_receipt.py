@@ -44,6 +44,7 @@ class PurchaseReceipt(BuyingController):
 		from erpnext.stock.doctype.purchase_receipt_item.purchase_receipt_item import PurchaseReceiptItem
 		from frappe.types import DF
 
+		actual_receipt_date: DF.Date
 		additional_discount_percentage: DF.Float
 		address_display: DF.TextEditor | None
 		amended_from: DF.Link | None
@@ -384,6 +385,8 @@ class PurchaseReceipt(BuyingController):
 		self.set_consumed_qty_in_subcontract_order()
 		self.reserve_stock()
 		self.update_received_qty_if_from_pp()
+		self.update_asset_receive_entries()
+
 
 	def update_received_qty_if_from_pp(self):
 		from frappe.query_builder.functions import Coalesce, Sum
@@ -442,6 +445,7 @@ class PurchaseReceipt(BuyingController):
 		self.delete_auto_created_batches()
 		self.set_consumed_qty_in_subcontract_order()
 		self.update_received_qty_if_from_pp()
+		self.delete_asset_receive_entries()
 
 	def before_cancel(self):
 		super().before_cancel()
@@ -450,6 +454,30 @@ class PurchaseReceipt(BuyingController):
 	def remove_amount_difference_with_purchase_invoice(self):
 		for item in self.items:
 			item.amount_difference_with_purchase_invoice = 0
+			
+	#Update asset entries if asset
+	def update_asset_receive_entries(self):
+		for a in self.items:
+			item_group = frappe.db.get_value("Item", a.item_code, "item_group")
+			if item_group and item_group == "Fixed Asset":
+				ae = frappe.new_doc("Asset Received Entries")
+				ae.item_code = a.item_code
+				ae.child_ref = a.name
+				ae.item_name = a.item_name
+				ae.qty = a.qty
+				ae.company = self.company
+				ae.received_date = self.posting_date
+				# ae.reference_type = "Purchase Receipt"
+				ae.ref_doc = self.name
+				# ae.branch = self.branch
+				ae.cost_center = a.cost_center
+				ae.warehouse = a.warehouse
+				ae.flags.ignore_permissions = True
+				ae.submit()
+				
+	#Delete asset entries. Taken from old code base
+	def delete_asset_receive_entries(self):
+		frappe.db.sql("delete from `tabAsset Received Entries` where ref_doc = %s", self.name)
 
 	def get_gl_entries(self, inventory_account_map=None, via_landed_cost_voucher=False):
 		from erpnext.accounts.general_ledger import process_gl_map

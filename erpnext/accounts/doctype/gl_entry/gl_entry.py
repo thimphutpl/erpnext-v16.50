@@ -234,6 +234,18 @@ class GLEntry(Document):
 			"Account", self.account, fieldname=["is_group", "docstatus", "company"], as_dict=True
 		)
 
+		if not account:
+			frappe.throw(
+				_(
+					"{0} {1}: Account {2} does not exist. "
+					"Please check the GL Entry."
+				).format(
+					self.voucher_type,
+					self.voucher_no,
+					self.account or _("Not Set")
+				)
+			)
+
 		if account.is_group == 1:
 			frappe.throw(
 				_(

@@ -5,7 +5,7 @@
    "label": "Sales Order Analysis"
   }
  ],
- "content": "[{\"id\": \"36ea8252f4\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Selling Onboarding\", \"col\": 12}}, {\"id\": \"f4c73734c4\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Sales Order Analysis\", \"col\": 12}}, {\"id\": \"adf8fed2ff\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Sales Orders to Deliver\", \"col\": 4}}, {\"id\": \"975633cef2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Sales Orders to Bill\", \"col\": 4}}, {\"id\": \"2900555572\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Annual Sales\", \"col\": 4}}, {\"id\": \"6ihr3i0kRN\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eTaxes &amp; Transaction\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"nqPJRJW1zr\", \"type\": \"card\", \"data\": {\"card_name\": \"Selling Transaction\", \"col\": 4}}, {\"id\": \"selcard003\", \"type\": \"card\", \"data\": {\"card_name\": \"Pricing\", \"col\": 4}}, {\"id\": \"selcard004\", \"type\": \"card\", \"data\": {\"card_name\": \"Point of Sale\", \"col\": 4}}, {\"id\": \"selcard005\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup & Settings\", \"col\": 4}}, {\"id\": \"DOcQC1J0R_\", \"type\": \"paragraph\", \"data\": {\"text\": \"Reports\", \"col\": 12}}, {\"id\": \"selcard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Sales Reports\", \"col\": 4}}, {\"id\": \"selcard001\", \"type\": \"card\", \"data\": {\"card_name\": \"Customer Reports\", \"col\": 4}}]",
+ "content": "[{\"id\": \"36ea8252f4\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Selling Onboarding\", \"col\": 12}}, {\"id\": \"f4c73734c4\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Sales Order Analysis\", \"col\": 12}}, {\"id\": \"adf8fed2ff\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Sales Orders to Deliver\", \"col\": 4}}, {\"id\": \"975633cef2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Sales Orders to Bill\", \"col\": 4}}, {\"id\": \"2900555572\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Annual Sales\", \"col\": 4}}, {\"id\": \"6ihr3i0kRN\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eTaxes &amp; Transaction\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"nqPJRJW1zr\", \"type\": \"card\", \"data\": {\"card_name\": \"Selling Transaction\", \"col\": 4}}, {\"id\": \"selcard003\", \"type\": \"card\", \"data\": {\"card_name\": \"Pricing\", \"col\": 4}}, {\"id\": \"selcard004\", \"type\": \"card\", \"data\": {\"card_name\": \"Point of Sale\", \"col\": 4}}, {\"id\": \"selcard005\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup & Settings\", \"col\": 4}}, {\"id\": \"DOcQC1J0R_\", \"type\": \"paragraph\", \"data\": {\"text\": \"Reports\", \"col\": 12}}, {\"id\": \"selcard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Sales Reports\", \"col\": 4}}, {\"id\": \"selcard001\", \"type\": \"card\", \"data\": {\"card_name\": \"Customer Reports\", \"col\": 4}}, {\"id\": \"IZd5Ascuaz\", \"type\": \"card\", \"data\": {\"card_name\": \"POS Report\", \"col\": 4}}]",
  "creation": "2020-01-28 11:49:12.092882",
  "custom_blocks": [],
  "docstatus": 0,
@@ -226,54 +226,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Setup",
-   "link_count": 4,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Tax Template",
-   "link_count": 0,
-   "link_to": "Sales Taxes and Charges Template",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Terms Template",
-   "link_count": 0,
-   "link_to": "Terms and Conditions",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Shipping Rule",
-   "link_count": 0,
-   "link_to": "Shipping Rule",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Sales Partner",
-   "link_count": 0,
-   "link_to": "Sales Partner",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Pricing",
    "link_count": 6,
    "link_type": "DocType",
@@ -343,8 +295,38 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "POS Report",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "POS Register",
+   "link_count": 0,
+   "link_to": "POS Register",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cheques and Deposits Incorrectly cleared",
+   "link_count": 0,
+   "link_to": "Cheques and Deposits Incorrectly cleared",
+   "link_type": "Report",
+   "onboard": 0,
+   "report_ref_doctype": "Payment Entry",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Point of Sale",
-   "link_count": 4,
+   "link_count": 6,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -388,9 +370,29 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "POS Invoice",
+   "link_count": 0,
+   "link_to": "POS Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice",
+   "link_count": 0,
+   "link_to": "Sales Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2026-11-09 14:54:35.340055",
+ "modified": "2026-11-24 20:12:47.579580",
  "modified_by": "Administrator",
  "module": "Selling",
  "module_onboarding": "Selling Onboarding",

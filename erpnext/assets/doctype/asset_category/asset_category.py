@@ -15,15 +15,17 @@ class AssetCategory(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
 		from erpnext.assets.doctype.asset_category_account.asset_category_account import AssetCategoryAccount
 		from erpnext.assets.doctype.asset_finance_book.asset_finance_book import AssetFinanceBook
+		from frappe.types import DF
 
 		accounts: DF.Table[AssetCategoryAccount]
 		asset_category_name: DF.Data
 		enable_cwip_accounting: DF.Check
 		finance_books: DF.Table[AssetFinanceBook]
+		is_flat: DF.Check
+		is_land: DF.Check
+		is_vehicle: DF.Check
 		non_depreciable_category: DF.Check
 	# end: auto-generated types
 

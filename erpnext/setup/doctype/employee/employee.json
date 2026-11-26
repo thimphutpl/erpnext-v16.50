@@ -103,18 +103,20 @@
   "salary_mode",
   "section_break_teny",
   "employee_bank_accounts",
+  "section_break_whxm",
+  "column_break_uqnt",
+  "tpn_number",
+  "pf_number",
+  "pf_tiers",
+  "column_break_lmhh",
+  "gis_number",
+  "gis_policy_number",
   "bank_details_section",
   "column_break_heye",
   "bank_name",
   "bank_branch",
   "bank_account_type",
   "bank_ac_no",
-  "column_break_uqnt",
-  "tpn_number",
-  "pf_number",
-  "pf_tiers",
-  "gis_number",
-  "gis_policy_number",
   "personal_details",
   "marital_status",
   "family_background",
@@ -169,7 +171,7 @@
   "pms_rating_tab",
   "table_xzfj",
   "disciplinary_tab",
-  "table_lxgr"
+  "employee_disciplinary_record"
  ],
  "fields": [
   {
@@ -886,6 +888,7 @@
   {
    "fieldname": "bank_details_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Bank Details"
   },
   {
@@ -1138,11 +1141,6 @@
    "label": "Disciplinary"
   },
   {
-   "fieldname": "table_lxgr",
-   "fieldtype": "Table",
-   "options": "Disciplinary"
-  },
-  {
    "fieldname": "attendance_branch",
    "fieldtype": "Link",
    "label": "Attendance Branch",
@@ -1159,6 +1157,20 @@
    "fieldtype": "Link",
    "label": "PMS Group",
    "options": "PMS Group"
+  },
+  {
+   "fieldname": "employee_disciplinary_record",
+   "fieldtype": "Table",
+   "options": "Employee Disciplinary Summary"
+  },
+  {
+   "fieldname": "section_break_whxm",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "column_break_lmhh",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-user",
@@ -1166,7 +1178,7 @@
  "image_field": "image",
  "is_tree": 1,
  "links": [],
- "modified": "2026-11-12 16:00:31.831982",
+ "modified": "2026-11-24 12:23:07.523550",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Employee",

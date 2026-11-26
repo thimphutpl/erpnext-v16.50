@@ -14,6 +14,8 @@ frappe.listview_settings["Asset"] = {
 			return [__("Capitalized"), "grey", "status,=,Capitalized"];
 		} else if (doc.status === "Scrapped") {
 			return [__("Scrapped"), "grey", "status,=,Scrapped"];
+		} else if (doc.status === "Donated") {
+			return [__("Donated"), "grey", "status,=,Donated"];
 		} else if (doc.status === "In Maintenance") {
 			return [__("In Maintenance"), "orange", "status,=,In Maintenance"];
 		} else if (doc.status === "Out of Order") {

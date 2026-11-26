@@ -268,8 +268,8 @@ def validate_expense_against_budget(args, throw_error=True):
 	account_dtl = frappe.get_doc("Account", args.account)
 	account_type = account_dtl.account_type
 	
-	if not account_type:
-		frappe.throw("Account Type missing for Budget account <b>{}</b>".format(args.account))
+	# if not account_type:
+	# 	frappe.throw("Account Type missing for Budget account <b>{}</b>".format(args.account))
 
 	if account_dtl.ignore_budget_check:
 		return

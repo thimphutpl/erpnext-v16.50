@@ -187,6 +187,13 @@ frappe.ui.form.on("Asset", {
 					},
 					__("Actions")
 				);
+				frm.add_custom_button(
+					__("Donate Asset"),
+					function () {
+						erpnext.asset.donate_asset(frm);
+					},
+					__("Actions")
+				);
 			} else if (frm.doc.status == "Scrapped") {
 				frm.add_custom_button(__("Restore Asset"), function () {
 					erpnext.asset.restore_asset(frm);
@@ -255,7 +262,7 @@ frappe.ui.form.on("Asset", {
 		if (
 			!frm.doc.purchase_receipt &&
 			!frm.doc.purchase_invoice &&
-			["Existing Asset", "Composite Component"].includes(frm.doc.asset_type)
+			["Existing Asset", "Donated Asset"].includes(frm.doc.asset_type)
 		) {
 			return false;
 		}
@@ -285,7 +292,7 @@ frappe.ui.form.on("Asset", {
 	toggle_reference_doc: function (frm) {
 		const is_submitted = frm.doc.docstatus === 1;
 		const is_special_asset =
-			frm.doc.asset_type == "Existing Asset" || frm.doc.asset_type == "Composite Asset";
+			frm.doc.asset_type == "Existing Asset" || frm.doc.asset_type == "Donated Asset";
 
 		const clear_field = (field) => {
 			if (frm.doc[field]) {
@@ -339,9 +346,13 @@ frappe.ui.form.on("Asset", {
 			});
 			return;
 		}
-
-		frm.toggle_reqd("purchase_receipt", 1);
-		frm.toggle_reqd("purchase_invoice", 1);
+		if (frm.doc.asset_type == "Existing Asset" || frm.doc.asset_type == "Donated Asset"){
+			frm.toggle_reqd("purchase_receipt", 0);
+			frm.toggle_reqd("purchase_invoice", 0);
+		}else{
+			frm.toggle_reqd("purchase_receipt", 1);
+			frm.toggle_reqd("purchase_invoice", 1);
+		}
 	},
 
 	make_journal_entry: function (frm) {
@@ -481,7 +492,7 @@ frappe.ui.form.on("Asset", {
 				if (v.journal_entry) {
 					asset_values.push(asset_value);
 				} else {
-					if (["Scrapped", "Sold"].includes(frm.doc.status)) {
+					if (["Scrapped", "Donated", "Sold"].includes(frm.doc.status)) {
 						asset_values.push(null);
 					} else {
 						asset_values.push(asset_value);
@@ -516,7 +527,7 @@ frappe.ui.form.on("Asset", {
 			});
 		}
 
-		if (["Scrapped", "Sold"].includes(frm.doc.status)) {
+		if (["Scrapped", "Donated", "Sold"].includes(frm.doc.status)) {
 			x_intervals.push(frappe.format(frm.doc.disposal_date, { fieldtype: "Date" }));
 			asset_values.push(0);
 		}
@@ -546,22 +557,17 @@ frappe.ui.form.on("Asset", {
 	},
 
 	set_finance_book: function (frm) {
-		let item_code = frm.doc.item_code;
-		let net_purchase_amount = frm.doc.net_purchase_amount;
-
 		frappe.call({
 			method: "erpnext.assets.doctype.asset.asset.get_item_details",
 			args: {
-				item_code: item_code,
+				item_code: frm.doc.item_code,
 				asset_category: frm.doc.asset_category,
-				net_purchase_amount: net_purchase_amount,
+				net_purchase_amount: frm.doc.net_purchase_amount,
+				asset_sub_category: frm.doc.asset_sub_category,
+				depreciation_start_date: frm.doc.available_for_use_date,
 			},
 			callback: function (r, rt) {
-				if (
-					r.message &&
-					frm.doc.item_code === item_code &&
-					frm.doc.net_purchase_amount === net_purchase_amount
-				) {
+				if (r.message) {
 					frm.set_value("finance_books", r.message);
 				}
 			},
@@ -759,12 +765,15 @@ frappe.ui.form.on("Asset", {
 	},
 
 	net_purchase_amount: function (frm) {
-		if (frm.doc.finance_books && frm.doc.finance_books.length) {
+		if (frm.doc.item_code && frm.doc.calculate_depreciation && frm.doc.net_purchase_amount) {
+			frm.trigger("set_finance_book");
+		} else {
+			frm.set_value("finance_books", []);
+		}
+		if (frm.doc.finance_books) {
 			frm.doc.finance_books.forEach((d) => {
 				frm.events.set_depreciation_rate(frm, d);
 			});
-		} else if (frm.doc.item_code && frm.doc.calculate_depreciation && frm.doc.net_purchase_amount) {
-			frm.trigger("set_finance_book");
 		}
 	},
 
@@ -977,6 +986,36 @@ erpnext.asset.scrap_asset = function (frm) {
 		},
 	});
 	scrap_dialog.show();
+};
+
+erpnext.asset.donate_asset = function (frm) {
+	var donate_dialog = new frappe.ui.Dialog({
+		title: __("Enter date to donate asset"),
+		fields: [
+			{
+				label: __("Select the date"),
+				fieldname: "donate_date",
+				fieldtype: "Date",
+				reqd: 1,
+			},
+		],
+		size: "medium",
+		primary_action_label: "Submit",
+		primary_action(values) {
+			frappe.call({
+				args: {
+					asset_name: frm.doc.name,
+					donate_date: values.donate_date,
+				},
+				method: "erpnext.assets.doctype.asset.depreciation.donate_asset",
+				callback: function (r) {
+					frm.reload_doc();
+					donate_dialog.hide();
+				},
+			});
+		},
+	});
+	donate_dialog.show();
 };
 
 erpnext.asset.restore_asset = function (frm) {

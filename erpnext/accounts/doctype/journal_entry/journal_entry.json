@@ -14,6 +14,7 @@
   "company",
   "voucher_type",
   "branch",
+  "is_scrapped",
   "column_break1",
   "naming_series",
   "posting_date",
@@ -670,6 +671,14 @@
    "fieldtype": "Link",
    "label": "Branch",
    "options": "Branch"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.voucher_type == \"Asset Disposal\"",
+   "fieldname": "is_scrapped",
+   "fieldtype": "Check",
+   "label": "Is Scrapped",
+   "read_only": 1
   }
  ],
  "icon": "notebook-pen",
@@ -684,7 +693,7 @@
    "table_fieldname": "payment_entries"
   }
  ],
- "modified": "2026-11-16 10:39:59.346356",
+ "modified": "2026-11-23 14:58:39.434747",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry",

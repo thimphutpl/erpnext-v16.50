@@ -326,7 +326,8 @@
    "label": "Rate",
    "oldfieldname": "import_rate",
    "oldfieldtype": "Currency",
-   "options": "currency"
+   "options": "currency",
+   "reqd": 1
   },
   {
    "columns": 2,
@@ -956,7 +957,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-09-30 23:24:44.044604",
+ "modified": "2026-11-25 11:15:04.162357",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order Item",

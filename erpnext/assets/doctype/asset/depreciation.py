@@ -372,14 +372,35 @@ def scrap_asset(asset_name: str, scrap_date: DateTimeLikeObject | None = None):
 
 	create_journal_entry_for_scrap(asset, scrap_date)
 
+@frappe.whitelist()
+def donate_asset(asset_name: str, donate_date: DateTimeLikeObject | None = None):
+	frappe.has_permission("Asset", "write", asset_name, throw=True)
+	asset = frappe.get_doc("Asset", asset_name)
+	donate_date = getdate(donate_date) or getdate(today())
+	asset.db_set("disposal_date", donate_date)
+	validate_asset_for_donate(asset, donate_date)
+
+	depreciate_asset(asset, donate_date, get_note_for_donate(asset))
+	asset.reload()
+
+	create_journal_entry_for_donate(asset, donate_date)
+
 
 def validate_asset_for_scrap(asset, scrap_date):
 	if asset.docstatus != 1:
 		frappe.throw(_("Asset {0} must be submitted").format(asset.name))
-	elif asset.status in ("Cancelled", "Sold", "Scrapped", "Capitalized"):
+	elif asset.status in ("Cancelled", "Sold", "Scrapped", "Capitalized", "Donated"):
 		frappe.throw(_("Asset {0} cannot be scrapped, as it is already {1}").format(asset.name, asset.status))
 
 	validate_scrap_date(asset, scrap_date)
+
+def validate_asset_for_donate(asset, donate_date):
+	if asset.docstatus != 1:
+		frappe.throw(_("Asset {0} must be submitted").format(asset.name))
+	elif asset.status in ("Cancelled", "Sold", "Donated", "Capitalized", "Donated"):
+		frappe.throw(_("Asset {0} cannot be Donated, as it is already {1}").format(asset.name, asset.status))
+
+	validate_donate_date(asset, donate_date)
 
 
 def validate_scrap_date(asset, scrap_date):
@@ -396,6 +417,21 @@ def validate_scrap_date(asset, scrap_date):
 			and scrap_date > getdate(asset.purchase_date)
 		):
 			frappe.throw(_("Asset cannot be scrapped before the last depreciation entry."))
+
+def validate_donate_date(asset, donate_date):
+	if donate_date > getdate():
+		frappe.throw(_("Future date is not allowed"))
+	elif donate_date < getdate(asset.purchase_date):
+		frappe.throw(_("Donated date cannot be before purchase date"))
+
+	if asset.calculate_depreciation:
+		last_booked_depreciation_date = get_last_depreciation_date(asset.name)
+		if (
+			last_booked_depreciation_date
+			and donate_date < last_booked_depreciation_date
+			and donate_date > getdate(asset.purchase_date)
+		):
+			frappe.throw(_("Asset cannot be Donated before the last depreciation entry."))
 
 
 def get_last_depreciation_date(asset_name):
@@ -423,6 +459,10 @@ def get_note_for_scrap(asset):
 		get_link_to_form(asset.doctype, asset.name)
 	)
 
+def get_note_for_donate(asset):
+	return _("This schedule was created when Asset {0} was donated.").format(
+		get_link_to_form(asset.doctype, asset.name)
+	)
 
 def create_journal_entry_for_scrap(asset, scrap_date):
 	depreciation_series = frappe.get_cached_value("Company", asset.company, "series_for_depreciation_entry")
@@ -432,6 +472,7 @@ def create_journal_entry_for_scrap(asset, scrap_date):
 	je.naming_series = depreciation_series
 	je.posting_date = scrap_date
 	je.company = asset.company
+	je.is_scrapped = 1
 	je.remark = f"Scrap Entry for asset {asset.name}"
 
 	for entry in get_gl_entries_on_asset_disposal(asset, scrap_date):
@@ -446,6 +487,30 @@ def create_journal_entry_for_scrap(asset, scrap_date):
 	add_asset_activity(asset.name, _("Asset scrapped"))
 	frappe.msgprint(
 		_("Asset scrapped via Journal Entry {0}").format(get_link_to_form("Journal Entry", je.name))
+	)
+
+def create_journal_entry_for_donate(asset, donate_date):
+	depreciation_series = frappe.get_cached_value("Company", asset.company, "series_for_depreciation_entry")
+
+	je = frappe.new_doc("Journal Entry")
+	je.voucher_type = "Asset Disposal"
+	je.naming_series = depreciation_series
+	je.posting_date = donate_date
+	je.company = asset.company
+	je.remark = f"Donate Entry for asset {asset.name}"
+
+	for entry in get_gl_entries_on_asset_disposal(asset, donate_date):
+		entry.update({"reference_type": "Asset", "reference_name": asset.name})
+		je.append("accounts", entry)
+
+	je.flags.ignore_permissions = True
+	je.save()
+	if not je.meta.get_workflow():
+		je.submit()
+
+	add_asset_activity(asset.name, _("Asset Donated"))
+	frappe.msgprint(
+		_("Asset Donated via Journal Entry {0}").format(get_link_to_form("Journal Entry", je.name))
 	)
 
 
