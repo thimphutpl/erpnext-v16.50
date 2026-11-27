@@ -15,6 +15,7 @@
   "cost_center_number",
   "parent_cost_center",
   "company",
+  "abbr",
   "cb0",
   "is_group",
   "disabled",
@@ -131,13 +132,21 @@
    "fieldtype": "Check",
    "label": "Branch Created",
    "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "abbr",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Abbr"
   }
  ],
  "icon": "chart-pie",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-16 20:23:54.544389",
+ "modified": "2026-11-27 15:18:15.074267",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cost Center",
