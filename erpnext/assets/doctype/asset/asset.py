@@ -72,6 +72,7 @@ class Asset(AccountsController):
 		construction_year: DF.Data | None
 		cost_center: DF.Link
 		custodian: DF.Link
+		custodian_name: DF.Data
 		customer: DF.Link | None
 		default_finance_book: DF.Link | None
 		department: DF.Link | None

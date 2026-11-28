@@ -20,6 +20,8 @@
   "column_break0",
   "supplier_group",
   "country",
+  "mobile_no",
+  "email_id",
   "image",
   "defaults_section",
   "default_currency",
@@ -37,8 +39,6 @@
   "primary_address",
   "column_break_mglr",
   "supplier_primary_contact",
-  "mobile_no",
-  "email_id",
   "accounting_tab",
   "default_accounts_section",
   "accounts",
@@ -406,19 +406,15 @@
    "options": "Contact"
   },
   {
-   "fetch_from": "supplier_primary_contact.mobile_no",
    "fieldname": "mobile_no",
-   "fieldtype": "Read Only",
-   "hidden": 1,
+   "fieldtype": "Phone",
    "in_global_search": 1,
    "label": "Mobile No",
    "no_copy": 1
   },
   {
-   "fetch_from": "supplier_primary_contact.email_id",
    "fieldname": "email_id",
-   "fieldtype": "Read Only",
-   "hidden": 1,
+   "fieldtype": "Data",
    "in_global_search": 1,
    "label": "Email ID",
    "no_copy": 1
@@ -584,7 +580,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2026-11-16 16:37:56.947059",
+ "modified": "2026-11-25 10:56:14.951761",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",

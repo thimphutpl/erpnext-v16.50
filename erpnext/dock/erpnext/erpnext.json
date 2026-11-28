@@ -48,14 +48,6 @@
   {
    "added": 1,
    "hidden": 0,
-   "icon": "factory-duotone",
-   "link_to": "Manufacturing",
-   "link_type": "Sidebar",
-   "title": "Manufacturing"
-  },
-  {
-   "added": 1,
-   "hidden": 0,
    "icon": "gantt-chart-duotone",
    "link_to": "Projects",
    "link_type": "Sidebar",
@@ -79,7 +71,15 @@
   },
   {
    "added": 1,
-   "hidden": 0,
+   "hidden": 1,
+   "icon": "factory-duotone",
+   "link_to": "Manufacturing",
+   "link_type": "Sidebar",
+   "title": "Manufacturing"
+  },
+  {
+   "added": 1,
+   "hidden": 1,
    "icon": "color-monthly-rank",
    "link_to": "Budget Management",
    "link_type": "Workspace",
@@ -102,7 +102,7 @@
    "title": "Support"
   }
  ],
- "modified": "2026-10-17 13:49:01.983406",
+ "modified": "2026-11-26 14:22:37.692859",
  "modified_by": "Administrator",
  "name": "erpnext",
  "owner": "Administrator",

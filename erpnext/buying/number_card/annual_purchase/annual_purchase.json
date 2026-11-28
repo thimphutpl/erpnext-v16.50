@@ -1,5 +1,5 @@
 {
- "aggregate_function_based_on": "total",
+ "aggregate_function_based_on": "grand_total",
  "creation": "2020-07-20 21:01:02.367127",
  "currency": "BTN",
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "is_public": 1,
  "is_standard": 1,
  "label": "Annual Purchase",
- "modified": "2026-11-10 09:26:34.585329",
+ "modified": "2026-11-22 16:38:38.568751",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Annual Purchase",

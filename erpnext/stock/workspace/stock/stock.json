@@ -5,7 +5,7 @@
    "label": "Stock Value by Item Group"
   }
  ],
- "content": "[{\"id\": \"9daa4db8f8\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Stock Onboarding\", \"col\": 12}}, {\"id\": \"0d4b2a0f05\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Stock Value by Item Group\", \"col\": 12}}, {\"id\": \"606b616c6c\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Stock Value\", \"col\": 4}}, {\"id\": \"e1c9621c31\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Warehouses\", \"col\": 4}}, {\"id\": \"ac7a22cfdd\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Active Items\", \"col\": 4}}, {\"id\": \"9YMgmj7krh\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eMasters &amp; Transaction\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"zk0mzR_aYE\", \"type\": \"card\", \"data\": {\"card_name\": \"Masters & Transaction\", \"col\": 4}}, {\"id\": \"XJJTfyRPVG\", \"type\": \"card\", \"data\": {\"card_name\": \"Stock Transaction\", \"col\": 4}}, {\"id\": \"stkcard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Stock Reports\", \"col\": 4}}, {\"id\": \"stkcard006\", \"type\": \"card\", \"data\": {\"card_name\": \"Stock Settings & Tools\", \"col\": 4}}, {\"id\": \"vVzH450Lgh\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eReports\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"jUrjs1V03P\", \"type\": \"card\", \"data\": {\"card_name\": \"Audit Report\", \"col\": 4}}]",
+ "content": "[{\"id\": \"9daa4db8f8\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Stock Onboarding\", \"col\": 12}}, {\"id\": \"0d4b2a0f05\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Stock Value by Item Group\", \"col\": 12}}, {\"id\": \"606b616c6c\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Stock Value\", \"col\": 4}}, {\"id\": \"e1c9621c31\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Warehouses\", \"col\": 4}}, {\"id\": \"ac7a22cfdd\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Active Items\", \"col\": 4}}, {\"id\": \"9YMgmj7krh\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eMasters &amp; Transaction\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"zk0mzR_aYE\", \"type\": \"card\", \"data\": {\"card_name\": \"Masters & Transaction\", \"col\": 4}}, {\"id\": \"5IpHvIsJC0\", \"type\": \"card\", \"data\": {\"card_name\": \"Stock Transaction\", \"col\": 4}}, {\"id\": \"-_zFvcrOLI\", \"type\": \"card\", \"data\": {\"card_name\": \"Stock Settings & Tools\", \"col\": 4}}, {\"id\": \"vVzH450Lgh\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eReports\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"_p8q_sOz2y\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}, {\"id\": \"hgphdEM9_N\", \"type\": \"card\", \"data\": {\"card_name\": \"Audit Report\", \"col\": 4}}]",
  "creation": "2020-03-02 15:43:10.096528",
  "custom_blocks": [],
  "docstatus": 0,
@@ -17,154 +17,6 @@
  "is_hidden": 0,
  "label": "Stock",
  "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Stock Reports",
-   "link_count": 14,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Stock Ledger",
-   "link_count": 0,
-   "link_to": "Stock Ledger",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Stock Balance",
-   "link_count": 0,
-   "link_to": "Stock Balance",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Stock Projected Qty",
-   "link_count": 0,
-   "link_to": "Stock Projected Qty",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Stock Analytics",
-   "link_count": 0,
-   "link_to": "Stock Analytics",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Stock Ageing",
-   "link_count": 0,
-   "link_to": "Stock Ageing",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Warehouse Wise Stock Balance",
-   "link_count": 0,
-   "link_to": "Warehouse Wise Stock Balance",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Warehouse wise Item Balance Age and Value",
-   "link_count": 0,
-   "link_to": "Warehouse wise Item Balance Age and Value",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Total Stock Summary",
-   "link_count": 0,
-   "link_to": "Total Stock Summary",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Item Shortage Report",
-   "link_count": 0,
-   "link_to": "Item Shortage Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Itemwise Recommended Reorder Level",
-   "link_count": 0,
-   "link_to": "Itemwise Recommended Reorder Level",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Reserved Stock",
-   "link_count": 0,
-   "link_to": "Reserved Stock",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Product Bundle Balance",
-   "link_count": 0,
-   "link_to": "Product Bundle Balance",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Stock Summary",
-   "link_count": 0,
-   "link_to": "stock-balance",
-   "link_type": "Page",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Warehouse Capacity Summary",
-   "link_count": 0,
-   "link_to": "warehouse-capacity-summary",
-   "link_type": "Page",
-   "onboard": 0,
-   "type": "Link"
-  },
   {
    "hidden": 0,
    "is_query_report": 0,
@@ -213,9 +65,38 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Stock Transaction",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Stock Entry",
+   "link_count": 0,
+   "link_to": "Stock Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Material Request",
+   "link_count": 0,
+   "link_to": "Material Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2026-11-16 12:42:50.642209",
+ "modified": "2026-11-25 12:46:46.807545",
  "modified_by": "Administrator",
  "module": "Stock",
  "module_onboarding": "Stock Onboarding",

@@ -38,7 +38,7 @@ class AssetCategory(Document):
 	def validate_finance_books(self):
 		for d in self.finance_books:
 			for field in ("Total Number of Depreciations", "Frequency of Depreciation"):
-				if cint(d.get(frappe.scrub(field))) < 1:
+				if cint(d.get(frappe.scrub(field))) < 1 and not self.is_land:
 					frappe.throw(
 						_("Row {0}: {1} must be greater than 0").format(d.idx, field), frappe.MandatoryError
 					)

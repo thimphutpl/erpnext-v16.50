@@ -156,7 +156,15 @@ class AssetMovement(Document):
 		asset = frappe.get_doc("Asset", asset_id)
 
 		if cstr(employee) != asset.custodian:
-			frappe.db.set_value("Asset", asset_id, "custodian", cstr(employee))
+			employee_name = frappe.db.get_value("Employee", employee, "employee_name")
+			frappe.db.set_value(
+				"Asset",
+				asset_id,
+				{
+					"custodian": cstr(employee),
+					"custodian_name": cstr(employee_name)
+				}
+			)
 		if location and location != asset.location:
 			frappe.db.set_value("Asset", asset_id, "location", location)
 

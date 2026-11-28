@@ -48,7 +48,7 @@ class Supplier(TransactionBase):
 		default_currency: DF.Link | None
 		default_price_list: DF.Link | None
 		disabled: DF.Check
-		email_id: DF.ReadOnly | None
+		email_id: DF.Data | None
 		gender: DF.Link | None
 		hold_type: DF.Literal["All", "Invoices", "Payments"]
 		image: DF.AttachImage | None
@@ -56,7 +56,7 @@ class Supplier(TransactionBase):
 		is_internal_supplier: DF.Check
 		is_transporter: DF.Check
 		language: DF.Link | None
-		mobile_no: DF.ReadOnly | None
+		mobile_no: DF.Phone | None
 		naming_series: DF.Literal["SUP-.YYYY.-"]
 		on_hold: DF.Check
 		payment_terms: DF.Link | None

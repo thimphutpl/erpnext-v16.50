@@ -24,6 +24,14 @@ frappe.ui.form.on("Asset", {
 			};
 		});
 
+		frm.set_query("location", function () {
+			return {
+				filters: {
+					is_group: 0,
+				},
+			};
+		});
+
 		frm.set_query("department", function () {
 			return {
 				filters: {

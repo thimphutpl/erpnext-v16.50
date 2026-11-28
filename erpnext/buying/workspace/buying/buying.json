@@ -5,7 +5,7 @@
    "label": "Purchase Order Analysis"
   }
  ],
- "content": "[{\"id\": \"983cd8ea63\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Purchase Order Analysis\", \"col\": 12}}, {\"id\": \"d88a483751\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Purchase Orders to Receive\", \"col\": 4}}, {\"id\": \"22a7c36674\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Purchase Orders to Bill\", \"col\": 4}}, {\"id\": \"5fe5b5c369\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Annual Purchase\", \"col\": 4}}, {\"id\": \"Ekcd9F8qnI\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eMasters &amp; Transaction\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"buycard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Supplier & Item\", \"col\": 4}}, {\"id\": \"7TazVXgFkf\", \"type\": \"card\", \"data\": {\"card_name\": \"Buying Transaction\", \"col\": 4}}, {\"id\": \"EwWOp54LIW\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup & Settings\", \"col\": 4}}, {\"id\": \"vW2lnZjPMr\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eReports\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"pkGEy9cIeA\", \"type\": \"card\", \"data\": {\"card_name\": \"Purchase Reports\", \"col\": 4}}, {\"id\": \"buycard002\", \"type\": \"card\", \"data\": {\"card_name\": \"Supplier Reports\", \"col\": 4}}]",
+ "content": "[{\"id\": \"983cd8ea63\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Purchase Order Analysis\", \"col\": 12}}, {\"id\": \"d88a483751\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Purchase Orders Count\", \"col\": 4}}, {\"id\": \"22a7c36674\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Purchase Amount\", \"col\": 4}}, {\"id\": \"Ekcd9F8qnI\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eMasters &amp; Transaction\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"buycard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Supplier & Item\", \"col\": 4}}, {\"id\": \"7TazVXgFkf\", \"type\": \"card\", \"data\": {\"card_name\": \"Buying Transaction\", \"col\": 4}}, {\"id\": \"EwWOp54LIW\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup & Settings\", \"col\": 4}}, {\"id\": \"vW2lnZjPMr\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eReports\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"pkGEy9cIeA\", \"type\": \"card\", \"data\": {\"card_name\": \"Purchase Reports\", \"col\": 4}}, {\"id\": \"buycard002\", \"type\": \"card\", \"data\": {\"card_name\": \"Supplier Reports\", \"col\": 4}}]",
  "creation": "2020-01-28 11:50:26.195467",
  "custom_blocks": [],
  "docstatus": 0,
@@ -147,7 +147,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Item-wise Purchase Register",
    "link_count": 0,
    "link_to": "Item-wise Purchase Register",
@@ -177,7 +177,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Procurement Tracker",
    "link_count": 0,
    "link_to": "Procurement Tracker",
@@ -188,7 +188,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Purchase Register",
    "link_count": 0,
    "link_to": "Purchase Register",
@@ -199,7 +199,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Purchase Order Trends",
    "link_count": 0,
    "link_to": "Purchase Order Trends",
@@ -210,7 +210,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Purchase Receipt Trends",
    "link_count": 0,
    "link_to": "Purchase Receipt Trends",
@@ -221,82 +221,13 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Purchase Invoice Trends",
    "link_count": 0,
    "link_to": "Purchase Invoice Trends",
    "link_type": "Report",
    "onboard": 0,
    "report_ref_doctype": "Purchase Invoice",
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Supplier & Item",
-   "link_count": 6,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Supplier Group",
-   "link_count": 0,
-   "link_to": "Supplier Group",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Item Group",
-   "link_count": 0,
-   "link_to": "Item Group",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Supplier",
-   "link_count": 0,
-   "link_to": "Supplier",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Item",
-   "link_count": 0,
-   "link_to": "Item",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "UOM",
-   "link_count": 0,
-   "link_to": "UOM",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "UOM Conversion Factor",
-   "link_count": 0,
-   "link_to": "UOM Conversion Factor",
-   "link_type": "DocType",
-   "onboard": 0,
    "type": "Link"
   },
   {
@@ -347,27 +278,83 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Supplier & Item",
+   "link_count": 6,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Supplier Group",
+   "link_count": 0,
+   "link_to": "Supplier Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Group",
+   "link_count": 0,
+   "link_to": "Item Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Supplier",
+   "link_count": 0,
+   "link_to": "Supplier",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "UOM",
+   "link_count": 0,
+   "link_to": "UOM",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "UOM Conversion Factor",
+   "link_count": 0,
+   "link_to": "UOM Conversion Factor",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item",
+   "link_count": 0,
+   "link_to": "Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2026-11-09 14:57:35.502548",
+ "modified": "2026-11-25 10:34:51.136183",
  "modified_by": "Administrator",
  "module": "Buying",
  "module_onboarding": "Buying Onboarding",
  "name": "Buying",
- "number_cards": [
-  {
-   "label": "Purchase Orders to Receive",
-   "number_card_name": "Purchase Orders to Receive"
-  },
-  {
-   "label": "Purchase Orders to Bill",
-   "number_card_name": "Purchase Orders to Bill"
-  },
-  {
-   "label": "Annual Purchase",
-   "number_card_name": "Annual Purchase"
-  }
- ],
+ "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,

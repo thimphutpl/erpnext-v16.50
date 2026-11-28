@@ -377,7 +377,7 @@ def get_accounts(company, root_type):
 		"""
 		select name, account_number, parent_account, lft, rgt, root_type, report_type, account_name, include_in_gross, account_type, is_group, lft, rgt
 		from `tabAccount`
-		where company=%s and root_type=%s order by lft""",
+		where company=%s and root_type=%s and IFNULL(is_common_mgt, 0) = 0 order by lft""",
 		(company, root_type),
 		as_dict=True,
 	)
@@ -578,7 +578,7 @@ def get_accounting_entries(
 def get_account_filter_query(root_lft, root_rgt, root_type, gl_entry):
 	acc = frappe.qb.DocType("Account")
 	exists_query = (
-		frappe.qb.from_(acc).select(acc.name).where(acc.name == gl_entry.account).where(acc.is_group == 0)
+		frappe.qb.from_(acc).select(acc.name).where(acc.name == gl_entry.account).where(acc.is_group == 0 and acc.is_common_mgt == 0)
 	)
 	if root_lft and root_rgt:
 		exists_query = exists_query.where(acc.lft >= root_lft).where(acc.rgt <= root_rgt)

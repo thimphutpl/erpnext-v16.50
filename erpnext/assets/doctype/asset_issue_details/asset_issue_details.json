@@ -192,6 +192,7 @@
    "options": "Warehouse"
   },
   {
+   "fetch_from": "branch.cost_center",
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
@@ -249,7 +250,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-11-23 10:15:37.056453",
+ "modified": "2026-11-25 14:55:49.845275",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset Issue Details",

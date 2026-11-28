@@ -17,8 +17,8 @@ class SubcontractingReceiptItem(Document):
 		additional_cost_per_qty: DF.Currency
 		amount: DF.Currency
 		batch_no: DF.Link | None
-		bom_secondary_item: DF.Data | None
 		bom: DF.Link | None
+		bom_secondary_item: DF.Data | None
 		brand: DF.Link | None
 		conversion_factor: DF.Float
 		cost_center: DF.Link | None
@@ -53,6 +53,7 @@ class SubcontractingReceiptItem(Document):
 		rm_cost_per_qty: DF.Currency
 		rm_supp_cost: DF.Currency
 		schedule_date: DF.Date | None
+		secondary_item_type: DF.Literal["", "Co-Product", "By-Product", "Scrap", "Additional Finished Good"]
 		secondary_items_cost_per_qty: DF.Currency
 		serial_and_batch_bundle: DF.Link | None
 		serial_no: DF.SmallText | None
@@ -62,7 +63,6 @@ class SubcontractingReceiptItem(Document):
 		subcontracting_order: DF.Link | None
 		subcontracting_order_item: DF.Data | None
 		subcontracting_receipt_item: DF.Data | None
-		secondary_item_type: DF.Literal["", "Co-Product", "By-Product", "Scrap", "Additional Finished Good"]
 		use_serial_batch_fields: DF.Check
 		valuation_type: DF.Literal["", "Valuation Rate", "% of Component Cost", "Manual"]
 		warehouse: DF.Link | None

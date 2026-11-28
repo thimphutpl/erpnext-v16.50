@@ -44,6 +44,7 @@ class Account(NestedSet):
 		ignore_budget_check: DF.Check
 		include_in_gross: DF.Check
 		is_centralized_budget: DF.Check
+		is_common_mgt: DF.Check
 		is_group: DF.Check
 		lft: DF.Int
 		old_parent: DF.Data | None

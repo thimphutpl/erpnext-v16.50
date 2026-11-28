@@ -56,16 +56,16 @@ frappe.ui.form.on("Asset Category", {
 			var d = locals[cdt][cdn];
 			return {
 				filters: {
-					account_type: "Temporary",
+					account_type: "Asset Received But Not Billed",
 					is_group: 0,
 					company: d.company_name,
 				},
 			};
 		});
-		// frm.set_query("asset_sub_category", "finance_books", function (doc) {
-		// 	return {
-		// 		filters: { asset_category: doc.name},
-		// 	};
-		// });
+		frm.set_query("asset_sub_category", "finance_books", function (doc) {
+			return {
+				filters: { asset_category: doc.name},
+			};
+		});
 	},
 });

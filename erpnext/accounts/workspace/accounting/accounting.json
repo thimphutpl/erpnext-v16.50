@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\": \"m57Z3ZiyVI\", \"type\": \"card\", \"data\": {\"card_name\": \"Transaction \", \"col\": 4}}, {\"id\": \"acccard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}, {\"id\": \"acccard001\", \"type\": \"card\", \"data\": {\"card_name\": \"Receivables & Payables\", \"col\": 4}}, {\"id\": \"acccard003\", \"type\": \"card\", \"data\": {\"card_name\": \"Tax & Compliance\", \"col\": 4}}, {\"id\": \"acccard005\", \"type\": \"card\", \"data\": {\"card_name\": \"Banking\", \"col\": 4}}, {\"id\": \"acccard007\", \"type\": \"card\", \"data\": {\"card_name\": \"Opening & Closing\", \"col\": 4}}, {\"id\": \"acccard008\", \"type\": \"card\", \"data\": {\"card_name\": \"Ledger Tools\", \"col\": 4}}, {\"id\": \"acccard010\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}]",
+ "content": "[{\"id\": \"m57Z3ZiyVI\", \"type\": \"card\", \"data\": {\"card_name\": \"Transaction \", \"col\": 4}}, {\"id\": \"acccard003\", \"type\": \"card\", \"data\": {\"card_name\": \"Tax & Compliance\", \"col\": 4}}, {\"id\": \"acccard005\", \"type\": \"card\", \"data\": {\"card_name\": \"Banking\", \"col\": 4}}, {\"id\": \"acccard000\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}, {\"id\": \"acccard001\", \"type\": \"card\", \"data\": {\"card_name\": \"Receivables & Payables\", \"col\": 4}}, {\"id\": \"acccard007\", \"type\": \"card\", \"data\": {\"card_name\": \"Opening & Closing\", \"col\": 4}}, {\"id\": \"acccard008\", \"type\": \"card\", \"data\": {\"card_name\": \"Ledger Tools\", \"col\": 4}}, {\"id\": \"acccard010\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}]",
  "creation": "2026-07-14 12:00:00",
  "custom_blocks": [],
  "docstatus": 0,
@@ -69,84 +69,6 @@
    "label": "General Ledger",
    "link_count": 0,
    "link_to": "General Ledger",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Tax & Compliance",
-   "link_count": 4,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "TDS Computation Summary",
-   "link_count": 0,
-   "link_to": "TDS Computation Summary",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Tax Withholding Details",
-   "link_count": 0,
-   "link_to": "Tax Withholding Details",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "TDS Remittance",
-   "link_count": 0,
-   "link_to": "TDS Remittance",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "TDS Receipt Update",
-   "link_count": 0,
-   "link_to": "TDS Receipt Update",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Receivables & Payables",
-   "link_count": 2,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Accounts Receivable",
-   "link_count": 0,
-   "link_to": "Accounts Receivable",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Accounts Payable",
-   "link_count": 0,
-   "link_to": "Accounts Payable",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -359,6 +281,16 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Bank Branch",
+   "link_count": 0,
+   "link_to": "Bank Branch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Bank Account Type",
    "link_count": 0,
    "link_to": "Bank Account Type",
@@ -379,15 +311,83 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Bank Branch",
+   "label": "Receivables & Payables",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Accounts Payable",
    "link_count": 0,
-   "link_to": "Bank Branch",
+   "link_to": "Accounts Payable",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Accounts Receivable",
+   "link_count": 0,
+   "link_to": "Accounts Receivable",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Tax & Compliance",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Tax Schedules",
+   "link_count": 0,
+   "link_to": "TDS Computation Summary",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Tax Certificate",
+   "link_count": 0,
+   "link_to": "Tax Withholding Details",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "TDS Remittance",
+   "link_count": 0,
+   "link_to": "TDS Remittance",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "TDS Receipt Update",
+   "link_count": 0,
+   "link_to": "TDS Receipt Update",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2026-11-24 11:59:45.288060",
+ "modified": "2026-11-26 14:55:46.493171",
  "modified_by": "Administrator",
  "module": "Accounts",
  "module_onboarding": "Accounting Onboarding",

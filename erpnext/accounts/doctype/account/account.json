@@ -21,6 +21,7 @@
   "root_type",
   "report_type",
   "account_currency",
+  "is_common_mgt",
   "column_break1",
   "parent_account",
   "account_category",
@@ -231,13 +232,19 @@
    "fieldname": "is_centralized_budget",
    "fieldtype": "Check",
    "label": "Is Centralized Budget"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_common_mgt",
+   "fieldtype": "Check",
+   "label": "Is Common Mgt"
   }
  ],
  "icon": "vault",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-11-16 12:52:34.109888",
+ "modified": "2026-11-27 16:10:29.572897",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",
